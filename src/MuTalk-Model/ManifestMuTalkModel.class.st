@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestMuTalkModel,
 	#superclass : #PackageManifest,
-	#category : 'MuTalk-Model'
+	#category : #'MuTalk-Model'
 }
 
 { #category : #'code-critics' }

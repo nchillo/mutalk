@@ -5,7 +5,7 @@ Class {
 		'mutant',
 		'mutantEvaluation'
 	],
-	#category : 'MuTalk-Model-Mutant evaluation results'
+	#category : #'MuTalk-Model-Mutant evaluation results'
 }
 
 { #category : #'instance creation' }

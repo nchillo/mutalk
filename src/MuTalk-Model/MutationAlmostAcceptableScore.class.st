@@ -1,7 +1,7 @@
 Class {
 	#name : #MutationAlmostAcceptableScore,
 	#superclass : #MutationScoreBehavior,
-	#category : 'MuTalk-Model-Score'
+	#category : #'MuTalk-Model-Score'
 }
 
 { #category : #'instance creation' }

@@ -4,13 +4,13 @@ Class {
 	#instVars : [
 		'result'
 	],
-	#category : 'MuTalk-Model-Mutant evaluation results'
+	#category : #'MuTalk-Model-Mutant evaluation results'
 }
 
 { #category : #'instance creation' }
-MutantEvaluationResultSurvived class >> canHandle: aMutant withResults: aTestResult [ 
-	^ aTestResult notNil
-		and: [aTestResult errorsSize + aTestResult failuresSize = 0]
+MutantEvaluationResultSurvived class >> canHandle: aMutant withResults: aTestResult [
+
+	^ aTestResult notNil and: [ aTestResult defects size = 0 ]
 ]
 
 { #category : #'instance creation' }

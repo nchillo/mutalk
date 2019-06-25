@@ -1,7 +1,7 @@
 Class {
 	#name : #MutantOperator,
 	#superclass : #Object,
-	#category : 'MuTalk-Model-Operators'
+	#category : #'MuTalk-Model-Operators'
 }
 
 { #category : #accessing }
@@ -47,17 +47,19 @@ MutantOperator >> isAPosibleMutatedNode: aRBMethodNode [
 ]
 
 { #category : #private }
-MutantOperator >> isAPosibleNodeToMutate: aRBMethodNode [ 
+MutantOperator >> isAPosibleNodeToMutate: aRBMethodNode [
+
 	| nodeThatMatches |
-	nodeThatMatches := RBParseTreeSearcher treeMatching: self expressionToReplace
-												in: aRBMethodNode.
-	
+
+	nodeThatMatches := RBParseTreeSearcher treeMatching: self expressionToReplace in: aRBMethodNode.
+
 	^ nodeThatMatches notNil and: [ self is: aRBMethodNode equalTo: nodeThatMatches ]
 ]
 
 { #category : #testing }
-MutantOperator >> isNodeOfMutation: posibleMutatedRBMethodNode comparingWith: originalRBMethodNode [ 
-	^ (self isAPosibleNodeToMutate: originalRBMethodNode) 
+MutantOperator >> isNodeOfMutation: posibleMutatedRBMethodNode comparingWith: originalRBMethodNode [
+
+	^ ( self isAPosibleNodeToMutate: originalRBMethodNode )
 		and: [ self isAPosibleMutatedNode: posibleMutatedRBMethodNode ]
 ]
 
@@ -68,17 +70,20 @@ MutantOperator >> modifiedSourceFor: aCompiledMethod number: aNumber [
 ]
 
 { #category : #private }
-MutantOperator >> modifiedSourceFor: aCompiledMethod with: aParseTree number: aNumber [ 
+MutantOperator >> modifiedSourceFor: aCompiledMethod with: aParseTree number: aNumber [
+
 	| rewriter parser number |
+
 	rewriter := RBParseTreeRewriter new.
 	number := aNumber.
 	parser := aParseTree copy.
-	rewriter 
+	rewriter
 		replace: self expressionToReplace
 		with: self newExpression
-		when: 
-			[ :node | number := number - 1.
-						number = 0 ].
+		when: [ :node | 
+			number := number - 1.
+			number = 0
+			].
 	rewriter executeTree: parser.
 	^ rewriter tree formattedCode
 ]
@@ -134,13 +139,15 @@ MutantOperator >> timesToApplyIn: aCompiledMethod [
 ]
 
 { #category : #applying }
-MutantOperator >> timesToApplyIn: aCompiledMethod with: aParseTree [ 
-	"Evaluates how many times can the operator be applyied"	
-	|searcher timesToApply|
+MutantOperator >> timesToApplyIn: aCompiledMethod with: aParseTree [
+
+	"Evaluates how many times can the operator be applyied"
+
+	| searcher timesToApply |
+
 	searcher := RBParseTreeSearcher new.
 	timesToApply := 0.
-	searcher matches:self expressionToReplace do:[:node :answer | timesToApply := timesToApply + 1].
+	searcher matches: self expressionToReplace do: [ :node :answer | timesToApply := timesToApply + 1 ].
 	searcher executeTree: aParseTree copy.
-	^timesToApply.
-	
+	^ timesToApply
 ]

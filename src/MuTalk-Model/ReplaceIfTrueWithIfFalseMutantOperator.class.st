@@ -1,7 +1,7 @@
 Class {
 	#name : #ReplaceIfTrueWithIfFalseMutantOperator,
 	#superclass : #SelectorReplacementMutantOperator,
-	#category : 'MuTalk-Model-Operators'
+	#category : #'MuTalk-Model-Operators'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #ReplaceOrWithTrueOperator,
 	#superclass : #MutantOperator,
-	#category : 'MuTalk-Model-Operators'
+	#category : #'MuTalk-Model-Operators'
 }
 
 { #category : #printing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #MutantKillingSuggestionGenerator,
 	#superclass : #Object,
-	#category : 'MuTalk-Model'
+	#category : #'MuTalk-Model'
 }
 
 { #category : #evaluating }

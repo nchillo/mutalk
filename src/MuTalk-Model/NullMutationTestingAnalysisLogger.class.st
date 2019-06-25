@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : 'MuTalk-Model-Logging'
+	#category : #'MuTalk-Model-Logging'
 }
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #ReplaceDetectIfNoneFirstBlockWithAlwaysFalseBlockOperator,
 	#superclass : #MutantOperator,
-	#category : 'MuTalk-Model-Operators'
+	#category : #'MuTalk-Model-Operators'
 }
 
 { #category : #printing }

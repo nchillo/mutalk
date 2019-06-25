@@ -9,7 +9,7 @@ Class {
 		'currentTest',
 		'testRunningElapsedTime'
 	],
-	#category : 'MuTalk-Model'
+	#category : #'MuTalk-Model'
 }
 
 { #category : #'instance creation' }

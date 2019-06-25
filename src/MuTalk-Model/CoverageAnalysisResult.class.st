@@ -5,7 +5,7 @@ Class {
 		'methodToTestDictionary',
 		'timeToRunTests'
 	],
-	#category : 'MuTalk-Model'
+	#category : #'MuTalk-Model'
 }
 
 { #category : #'instance creation' }

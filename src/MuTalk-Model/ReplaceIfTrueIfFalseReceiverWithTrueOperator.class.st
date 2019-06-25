@@ -1,7 +1,7 @@
 Class {
 	#name : #ReplaceIfTrueIfFalseReceiverWithTrueOperator,
 	#superclass : #ReplaceIfTrueIfFalseReceiverOperator,
-	#category : 'MuTalk-Model-Operators'
+	#category : #'MuTalk-Model-Operators'
 }
 
 { #category : #applying }

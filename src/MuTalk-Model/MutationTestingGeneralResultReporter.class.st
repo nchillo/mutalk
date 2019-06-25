@@ -6,7 +6,7 @@ Class {
 		'fileReference',
 		'packagesNames'
 	],
-	#category : 'MuTalk-Model-Reporting'
+	#category : #'MuTalk-Model-Reporting'
 }
 
 { #category : #'instance creation' }

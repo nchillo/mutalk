@@ -1,5 +1,5 @@
 Class {
 	#name : #MutantOperatorShouldNotBeAppliedException,
 	#superclass : #Error,
-	#category : 'MuTalk-Model'
+	#category : #'MuTalk-Model'
 }

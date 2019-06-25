@@ -5,7 +5,7 @@ Class {
 		'class',
 		'selector'
 	],
-	#category : 'MuTalk-Model'
+	#category : #'MuTalk-Model'
 }
 
 { #category : #'instance creation' }
@@ -31,10 +31,12 @@ TestCaseReference >> resources [
 
 { #category : #evaluating }
 TestCaseReference >> run [
+
 	| result |
+
 	result := self testCase run.
-	(result failuresSize > 0 or: [ result errorsSize > 0])
-		ifTrue: [TestsWithErrorsException signal].
+	result defects size > 0
+		ifTrue: [ TestsWithErrorsException signal ].
 	^ result
 ]
 

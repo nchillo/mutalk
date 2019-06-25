@@ -1,7 +1,7 @@
 Class {
 	#name : #AllTestsMethodsRunningMutantEvaluationStrategy,
 	#superclass : #MutantEvaluationStrategy,
-	#category : 'MuTalk-Model-Mutant evaluation strategies'
+	#category : #'MuTalk-Model-Mutant evaluation strategies'
 }
 
 { #category : #private }

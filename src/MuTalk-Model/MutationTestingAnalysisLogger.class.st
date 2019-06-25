@@ -1,7 +1,7 @@
 Class {
 	#name : #MutationTestingAnalysisLogger,
 	#superclass : #Object,
-	#category : 'MuTalk-Model-Logging'
+	#category : #'MuTalk-Model-Logging'
 }
 
 { #category : #logging }

@@ -5,7 +5,7 @@ Class {
 		'tests',
 		'coverageAnalysis'
 	],
-	#category : 'MuTalk-Model'
+	#category : #'MuTalk-Model'
 }
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RemoveCaretOperator,
 	#superclass : #MutantOperator,
-	#category : 'MuTalk-Model-Operators'
+	#category : #'MuTalk-Model-Operators'
 }
 
 { #category : #printing }
@@ -21,9 +21,10 @@ RemoveCaretOperator >> newExpression [
 
 ]
 
-{ #category : #suggestions }
+{ #category : #'as yet unclassified' }
 RemoveCaretOperator >> suggestionFor: aMutation using: aMutantKillingSuggestionGenerator [
-	^aMutantKillingSuggestionGenerator suggestionForMutationProducedByARemoveCaretOperator: aMutation.
+
+	^ aMutantKillingSuggestionGenerator suggestionForMutationProducedByARemoveCaretOperator: aMutation
 ]
 
 { #category : #applying }

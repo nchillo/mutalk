@@ -1,7 +1,7 @@
 Class {
 	#name : #TestCasesSelectionStrategy,
 	#superclass : #Object,
-	#category : 'MuTalk-Model-TestCases selection strategies'
+	#category : #'MuTalk-Model-TestCases selection strategies'
 }
 
 { #category : #printing }

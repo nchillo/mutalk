@@ -1,7 +1,7 @@
 Class {
 	#name : #MutantEvaluationStrategy,
 	#superclass : #Object,
-	#category : 'MuTalk-Model-Mutant evaluation strategies'
+	#category : #'MuTalk-Model-Mutant evaluation strategies'
 }
 
 { #category : #evaluating }

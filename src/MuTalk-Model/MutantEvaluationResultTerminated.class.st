@@ -1,7 +1,7 @@
 Class {
 	#name : #MutantEvaluationResultTerminated,
 	#superclass : #MutantEvaluationResult,
-	#category : 'MuTalk-Model-Mutant evaluation results'
+	#category : #'MuTalk-Model-Mutant evaluation results'
 }
 
 { #category : #'instance creation' }

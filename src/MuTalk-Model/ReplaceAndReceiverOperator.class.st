@@ -1,7 +1,7 @@
 Class {
 	#name : #ReplaceAndReceiverOperator,
 	#superclass : #ReplaceReceiverOperator,
-	#category : 'MuTalk-Model-Operators'
+	#category : #'MuTalk-Model-Operators'
 }
 
 { #category : #applying }

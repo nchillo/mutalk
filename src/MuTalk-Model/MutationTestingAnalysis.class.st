@@ -13,7 +13,7 @@ Class {
 		'coverageAnalysisResult',
 		'logger'
 	],
-	#category : 'MuTalk-Model'
+	#category : #'MuTalk-Model'
 }
 
 { #category : #defaults }

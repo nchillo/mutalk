@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'mutantEvaluationResult'
 	],
-	#category : 'MuTalk-Model-Reporting'
+	#category : #'MuTalk-Model-Reporting'
 }
 
 { #category : #'instance creation' }

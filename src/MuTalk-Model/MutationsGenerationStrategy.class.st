@@ -1,7 +1,7 @@
 Class {
 	#name : #MutationsGenerationStrategy,
 	#superclass : #Object,
-	#category : 'MuTalk-Model-Mutations generation strategies'
+	#category : #'MuTalk-Model-Mutations generation strategies'
 }
 
 { #category : #generating }
