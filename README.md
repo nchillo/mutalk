@@ -7,13 +7,17 @@ This project was originally developed at the University of Buenos Aires (Argenti
 
 - all tests are green
 - mutation analysis works
-- UI still not converted
+- Works with Traits!
+
+### Pending State
+- UI
+- Code cleaning
 
 ## How to load
 ```smalltalk
 Metacello new
   baseline: 'MuTalk';
-  repository: 'github://pavel-krivanek/mutalk/src';
+  repository: 'github://nchillo/mutalk/src';
   load.
 ```
 
