@@ -1,7 +1,7 @@
 Class {
 	#name : #MutationTestingAnalysisTest,
 	#superclass : #TestCase,
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #accessing }

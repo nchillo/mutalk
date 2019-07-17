@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'testResource'
 	],
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #building }

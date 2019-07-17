@@ -6,7 +6,7 @@ Class {
 		'loggedStartBuildingMutations',
 		'loggedEvaluationMutations'
 	],
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #'instance creation' }

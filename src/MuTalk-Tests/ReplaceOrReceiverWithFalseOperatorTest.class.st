@@ -1,7 +1,7 @@
 Class {
 	#name : #ReplaceOrReceiverWithFalseOperatorTest,
 	#superclass : #MutantOperatorTest,
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #accessing }
