@@ -5,7 +5,7 @@ Class {
 		'anonymousClass',
 		'anonymousClassWithMethod'
 	],
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #accessing }

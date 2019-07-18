@@ -10,18 +10,22 @@ Class {
 
 { #category : #'instance creation' }
 MutationTestingGeneralResult class >> empty [
+
 	^ self for: OrderedCollection new
 ]
 
 { #category : #'instance creation' }
-MutationTestingGeneralResult class >> for: mutantsEvaluationsResults [ 
-	^self for: mutantsEvaluationsResults timed: Duration new
+MutationTestingGeneralResult class >> for: mutantsEvaluationsResults [
+
+	^ self for: mutantsEvaluationsResults timed: Duration new
 ]
 
 { #category : #'instance creation' }
-MutationTestingGeneralResult class >> for: mutantsEvaluationsResults timed: anElapsedTime [ 
-	^ self new initializeFor: mutantsEvaluationsResults timed: anElapsedTime;
-		 yourself
+MutationTestingGeneralResult class >> for: mutantsEvaluationsResults timed: anElapsedTime [
+
+	^ self new
+		initializeFor: mutantsEvaluationsResults timed: anElapsedTime;
+		yourself
 ]
 
 { #category : #accessing }
@@ -38,16 +42,6 @@ MutationTestingGeneralResult >> elapsedTime [
 MutationTestingGeneralResult >> initializeFor: mutantsEvaluationsResults timed: anElapsedTime [
 	particularResults := mutantsEvaluationsResults.
 	elapsedTime := anElapsedTime
-]
-
-{ #category : #testing }
-MutationTestingGeneralResult >> isAcceptableScore [
-	^ self mutationScore > 80
-]
-
-{ #category : #testing }
-MutationTestingGeneralResult >> isNonAcceptableScore [
-	^ self mutationScore < 50
 ]
 
 { #category : #accessing }
@@ -107,8 +101,7 @@ MutationTestingGeneralResult >> numberOfTerminatedMutants [
 MutationTestingGeneralResult >> printDetailedInfoOn: aStream [ 
 	
 	(particularResults 
-		groupBy:  [:result | result mutant operator]
-		having: [:g | true]) 
+		groupedBy:  [:result | result mutant operator]) 
 			keysAndValuesDo: [:key :value | 
 				aStream nextPutAll: key description.
 				aStream nextPutAll: ' - '.

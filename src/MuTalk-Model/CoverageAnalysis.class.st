@@ -103,11 +103,16 @@ CoverageAnalysis >> run [
 
 { #category : #private }
 CoverageAnalysis >> runTests [
-	|suite|
-	testRunningElapsedTime := Time millisecondsToRun: 
-		[suite := TestSuiteWrappedForCoverage for:self named: 'Test Suite for Coverage'.
-		 suite addTests: testCases.
-	    suite run ].
+
+	| suite |
+
+	testRunningElapsedTime := Time
+		millisecondsToRun: [ suite := TestSuiteWrappedForCoverage
+				for: self
+				named: 'Test Suite for Coverage'.
+			suite addTests: testCases.
+			suite run
+			]
 ]
 
 { #category : #private }

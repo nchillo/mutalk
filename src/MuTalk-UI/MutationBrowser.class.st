@@ -7,7 +7,7 @@ Class {
 		'particularResultsClassFilter',
 		'mutantEvaluationResult'
 	],
-	#category : 'MuTalk-UI'
+	#category : #'MuTalk-UI'
 }
 
 { #category : #'instance creation' }
@@ -267,14 +267,6 @@ MutationBrowser >> showDetails [
 { #category : #accessing }
 MutationBrowser >> testResults [
 	^ mutantEvaluationResult resultString
-]
-
-{ #category : #'as yet unclassified' }
-MutationBrowser >> testsSelectionStrategies [
-	^Array
-		with: NoneTestCasesSelectionStrategy new
-		with: ClassTestCasesSelectionStrategy new
-		with: PackageTestCasesSelectionStrategy new
 ]
 
 { #category : #building }

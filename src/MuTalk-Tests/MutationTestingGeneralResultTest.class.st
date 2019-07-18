@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'resource'
 	],
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #accessing }
@@ -81,8 +81,6 @@ MutationTestingGeneralResultTest >> testAccessorsOnEmptyResult [
 	self assert: emptyResult numberOfAliveMutants equals: 0.
 	self assert: emptyResult numberOfTerminatedMutants equals: 0.
 	self assert: emptyResult mutationScore equals: 0.
-	self assert: emptyResult isNonAcceptableScore.
-	self deny: emptyResult isAcceptableScore
 ]
 
 { #category : #testing }
@@ -97,9 +95,7 @@ MutationTestingGeneralResultTest >> testAccessorsWithOnlyOneAliveMutant [
 	self assert: mutantResult numberOfKilledMutants equals: 0.
 	self assert: mutantResult numberOfAliveMutants equals: 1.
 	self assert: mutantResult numberOfTerminatedMutants equals: 0.
-	self assert: mutantResult mutationScore equals: 0.
-	self assert: mutantResult isNonAcceptableScore.
-	self deny: mutantResult isAcceptableScore
+	self assert: mutantResult mutationScore equals: 0
 ]
 
 { #category : #testing }
@@ -115,8 +111,7 @@ MutationTestingGeneralResultTest >> testAccessorsWithOnlyOneKilledMutantByError 
 	self assert: mutantResult numberOfAliveMutants equals: 0.
 	self assert: mutantResult numberOfTerminatedMutants equals: 0.
 	self assert: mutantResult mutationScore equals: 100.
-	self deny: mutantResult isNonAcceptableScore.
-	self assert: mutantResult isAcceptableScore
+
 ]
 
 { #category : #testing }
@@ -131,9 +126,7 @@ MutationTestingGeneralResultTest >> testAccessorsWithOnlyOneKilledMutantByFailur
 	self assert: mutantResult numberOfKilledMutants equals: 1.
 	self assert: mutantResult numberOfAliveMutants equals: 0.
 	self assert: mutantResult numberOfTerminatedMutants equals: 0.
-	self assert: mutantResult mutationScore equals: 100.
-	self deny: mutantResult isNonAcceptableScore.
-	self assert: mutantResult isAcceptableScore
+	self assert: mutantResult mutationScore equals: 100
 ]
 
 { #category : #testing }
@@ -148,9 +141,7 @@ MutationTestingGeneralResultTest >> testAccessorsWithOnlyOneTerminatedMutant [
 	self assert: mutantResult numberOfKilledMutants equals: 0.
 	self assert: mutantResult numberOfAliveMutants equals: 0.
 	self assert: mutantResult numberOfTerminatedMutants equals: 1.
-	self assert: mutantResult mutationScore equals: 100.
-	self assert: mutantResult isAcceptableScore.
-	self deny: mutantResult isNonAcceptableScore
+	self assert: mutantResult mutationScore equals: 100
 ]
 
 { #category : #'testing - printing' }

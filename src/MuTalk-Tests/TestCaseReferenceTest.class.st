@@ -1,7 +1,7 @@
 Class {
 	#name : #TestCaseReferenceTest,
 	#superclass : #TestCase,
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #resources }

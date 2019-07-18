@@ -1,7 +1,7 @@
 Class {
 	#name : #RemoveExceptionHandlerOperatorTest,
 	#superclass : #MutantOperatorTest,
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #accessing }

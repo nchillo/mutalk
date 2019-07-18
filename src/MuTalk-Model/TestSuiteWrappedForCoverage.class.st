@@ -8,21 +8,27 @@ Class {
 }
 
 { #category : #'instance creation' }
-TestSuiteWrappedForCoverage class >> for: aCoverageAnalysis named: aString [ 
-	^self new initializeFor: aCoverageAnalysis named: aString.
+TestSuiteWrappedForCoverage class >> for: aCoverageAnalysis named: aString [
+
+	^ self new initializeFor: aCoverageAnalysis named: aString
 ]
 
 { #category : #initialization }
 TestSuiteWrappedForCoverage >> initializeFor: aCoverageAnalysis named: aString [
+
 	self name: aString.
-	coverageAnalysis := aCoverageAnalysis.
+	coverageAnalysis := aCoverageAnalysis
 ]
 
 { #category : #running }
-TestSuiteWrappedForCoverage >> run: aResult [ 
-	self tests do: [:each |coverageAnalysis currentTest: each.
-								self changed: each.
-								each run: aResult.
-								coverageAnalysis currentTest: nil]
-				 displayingProgress: 'Analysing Coverage'.
+TestSuiteWrappedForCoverage >> run: aResult [
+
+	self tests
+		do: [ :each | 
+			coverageAnalysis currentTest: each.
+			self changed: each.
+			each run: aResult.
+			coverageAnalysis currentTest: nil
+			]
+		displayingProgress: 'Analysing Coverage'
 ]

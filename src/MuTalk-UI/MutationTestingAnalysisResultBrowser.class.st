@@ -13,7 +13,7 @@ Class {
 		'aliveMutantList',
 		'killedMutantList'
 	],
-	#category : 'MuTalk-UI'
+	#category : #'MuTalk-UI'
 }
 
 { #category : #'instance creation' }
@@ -344,9 +344,8 @@ MutationTestingAnalysisResultBrowser >> result [
 
 { #category : #accessing }
 MutationTestingAnalysisResultBrowser >> statusColor [
-	self result isAcceptableScore ifTrue: [ ^ Color green ].
-	self result isNonAcceptableScore ifTrue: [ ^ Color red ].
-	^ Color yellow
+
+	^(MutationScoreBehavior buildFor: self result) color
 ]
 
 { #category : #accessing }

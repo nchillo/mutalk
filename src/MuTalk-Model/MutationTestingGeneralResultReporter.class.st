@@ -2,66 +2,43 @@ Class {
 	#name : #MutationTestingGeneralResultReporter,
 	#superclass : #Object,
 	#instVars : [
-		'mutationGeneralResult',
-		'fileReference',
-		'packagesNames'
+		'mutationGeneralResult'
 	],
 	#category : #'MuTalk-Model-Reporting'
 }
 
 { #category : #'instance creation' }
-MutationTestingGeneralResultReporter class >> for: aMutationGeneralResut in: aFileReference with: aPackagesNames [
-	^self new 
-		initializeFor: aMutationGeneralResut in: aFileReference asFileReference with: aPackagesNames;
+MutationTestingGeneralResultReporter class >> for: aMutationGeneralResut [
+
+	^ self new
+		initializeFor: aMutationGeneralResut;
 		yourself
 ]
 
-{ #category : #evaluating }
-MutationTestingGeneralResultReporter >> detailedInfo [
-	|stream|
-	stream := String streamContents: [:str|
-		str nextPutAll: mutationGeneralResult printString; cr.
-		str nextPutAll: '----------------------------------'; cr.
-		str nextPutAll: mutationGeneralResult elapsedTime printString; cr.
-		str nextPutAll: '----------------------------------'; cr.
-		mutationGeneralResult printDetailedInfoOn: str].
-	^stream contents
-	
-	
-]
-
 { #category : #'initialize-release' }
-MutationTestingGeneralResultReporter >> initializeFor: aMutationGeneralResut in: aFileReference with: aPackagesNames [
+MutationTestingGeneralResultReporter >> initializeFor: aMutationGeneralResut [
 
 	mutationGeneralResult := aMutationGeneralResut.
-	fileReference := aFileReference.
-	packagesNames := aPackagesNames
-]
-
-{ #category : #evaluating }
-MutationTestingGeneralResultReporter >> resumedInfo [
-	|stream|
-	stream := String streamContents: [:str|
-		str nextPutAll: mutationGeneralResult numberOfEvaluatedMutants printString; tab.
-		str nextPutAll: mutationGeneralResult numberOfKilledMutants printString; tab.
-		str nextPutAll: mutationGeneralResult numberOfAliveMutants printString; tab.
-		str nextPutAll: mutationGeneralResult numberOfTerminatedMutants printString; tab.
-		str nextPutAll: mutationGeneralResult mutationScore printString; tab.
-		str nextPutAll: mutationGeneralResult elapsedTime asMilliSeconds printString; tab.
-		packagesNames do: [:packageName | str nextPutAll: packageName printString; tab].
-		str cr.
-		].
-	^stream contents
-	
-	
 ]
 
 { #category : #evaluating }
 MutationTestingGeneralResultReporter >> value [
-	|file|
-	
-	file := fileReference writeStream.
-	file setToEnd; nextPutAll: self resumedInfo; close.
-	
-	
+
+	| stream |
+
+	stream := String
+		streamContents: [ :str | 
+			str
+				nextPutAll: mutationGeneralResult printString;
+				cr.
+			str
+				nextPutAll: '----------------------------------';
+				cr.
+			str
+				nextPutAll: mutationGeneralResult elapsedTime asMilliSeconds printString;
+				tab.
+			str cr.
+			mutationGeneralResult printDetailedInfoOn: str
+			].
+	^ stream contents
 ]

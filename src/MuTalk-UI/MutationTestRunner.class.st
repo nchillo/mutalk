@@ -21,7 +21,7 @@ Class {
 		'killedMutantOperatorFilter',
 		'loggingActivated'
 	],
-	#category : 'MuTalk-UI'
+	#category : #'MuTalk-UI'
 }
 
 { #category : #'instance-creation' }
