@@ -1,7 +1,7 @@
 Class {
 	#name : #TestCoverageAnalysis,
 	#superclass : #TestCase,
-	#category : #'MuTalk-Tests'
+	#category : 'MuTalk-Tests'
 }
 
 { #category : #testing }

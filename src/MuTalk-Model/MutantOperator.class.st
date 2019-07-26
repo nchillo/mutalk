@@ -21,6 +21,18 @@ MutantOperator class >> isAbstract [
 	^self subclasses isNotEmpty
 ]
 
+{ #category : #comparing }
+MutantOperator >> <= another [
+
+	^ self description <= another description
+]
+
+{ #category : #comparing }
+MutantOperator >> = another [
+
+	^ self class = another class
+]
+
 { #category : #printing }
 MutantOperator >> description [
 	self subclassResponsibility
@@ -29,6 +41,12 @@ MutantOperator >> description [
 { #category : #applying }
 MutantOperator >> expressionToReplace [
 	self subclassResponsibility
+]
+
+{ #category : #comparing }
+MutantOperator >> hash [
+
+	^ self class hash
 ]
 
 { #category : #private }

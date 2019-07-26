@@ -13,7 +13,7 @@ Class {
 		'aliveMutantList',
 		'killedMutantList'
 	],
-	#category : #'MuTalk-UI'
+	#category : 'MuTalk-UI'
 }
 
 { #category : #'instance creation' }

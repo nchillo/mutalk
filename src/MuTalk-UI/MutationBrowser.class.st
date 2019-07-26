@@ -7,7 +7,7 @@ Class {
 		'particularResultsClassFilter',
 		'mutantEvaluationResult'
 	],
-	#category : #'MuTalk-UI'
+	#category : 'MuTalk-UI'
 }
 
 { #category : #'instance creation' }

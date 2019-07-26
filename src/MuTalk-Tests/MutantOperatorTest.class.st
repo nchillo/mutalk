@@ -1,7 +1,7 @@
 Class {
 	#name : #MutantOperatorTest,
 	#superclass : #TestCase,
-	#category : #'MuTalk-Tests'
+	#category : 'MuTalk-Tests'
 }
 
 { #category : #testing }

@@ -3,98 +3,21 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'modelClasses',
-		'operators',
 		'particularResults',
 		'elapsedTime',
-		'mutationsGenerationStrategy',
-		'mutantsEvaluationStrategy',
 		'mutations',
 		'testCases',
 		'coverageAnalysisResult',
-		'logger'
+		'configuration'
 	],
 	#category : #'MuTalk-Model'
 }
 
-{ #category : #defaults }
-MutationTestingAnalysis class >> defaultLogger [
-	^NullMutationTestingAnalysisLogger new.
-]
-
-{ #category : #defaults }
-MutationTestingAnalysis class >> defaultMutantsEvaluationStrategy [
-	^ AllTestsMethodsRunningMutantEvaluationStrategy new
-]
-
-{ #category : #defaults }
-MutationTestingAnalysis class >> defaultMutationsGenerationStrategy [
-	^ AllMutationsGenerationStrategy new.
-]
-
 { #category : #'instance creation' }
-MutationTestingAnalysis class >> for: testCases mutating: classes using: operatorCollection [ 	
-	^ self 
-		for: testCases
-		mutating: classes
-		using: operatorCollection
-		with: self defaultMutantsEvaluationStrategy
-		with: self defaultMutationsGenerationStrategy
-]
+MutationTestingAnalysis class >> for: testCases mutating: classes using: aMutationTestingConfiguration [
 
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> for: testCases mutating: classes using: operatorCollection loggingIn: aLogger [ 
-	^ self 
-		for: testCases
-		mutating: classes
-		using: operatorCollection
-		with: self defaultMutantsEvaluationStrategy
-		with: self defaultMutationsGenerationStrategy
-		loggingIn: aLogger
-]
-
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> for: testCases mutating: classes using: operatorCollection with: aMutantEvaluationStrategy [
-	
-	^ self 
-		for: testCases
-		mutating: classes
-		using: operatorCollection
-		with: aMutantEvaluationStrategy
-		with: self defaultMutationsGenerationStrategy
-]
-
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> for: testCases mutating: classes using: operatorCollection with: aMutantEvaluationStrategy loggingIn: aLogger [
-	
-	^ self 
-		for: testCases
-		mutating: classes
-		using: operatorCollection
-		with: aMutantEvaluationStrategy
-		with: self defaultMutationsGenerationStrategy
-		loggingIn: aLogger
-]
-
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> for: testCases mutating: classes using: operatorCollection with: aMutantsEvaluationStrategy with: aMutationsGenerationStrategy [ 
-	^ self 
-		for: testCases
-		mutating: classes
-		using: operatorCollection
-		with: aMutantsEvaluationStrategy
-		with: aMutationsGenerationStrategy
-		loggingIn: self defaultLogger
-]
-
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> for: testCases mutating: classes using: operatorCollection with: aMutantsEvaluationStrategy with: aMutationsGenerationStrategy loggingIn: aLogger [ 
 	^ self new
-		initializeFor: testCases
-			mutating: classes
-			using: operatorCollection
-			with: aMutantsEvaluationStrategy
-			with: aMutationsGenerationStrategy
-			loggingIn: aLogger;
+		initializeFor: testCases mutating: classes using: aMutationTestingConfiguration;
 		yourself
 ]
 
@@ -111,64 +34,12 @@ MutationTestingAnalysis class >> testCasesFrom: testClasses [
 ]
 
 { #category : #'instance creation' }
-MutationTestingAnalysis class >> testCasesFrom: testClasses mutating: classes using: operatorCollection [ 
-	
-	^ self 
-		for: (self testCasesFrom: testClasses)
-		mutating: classes
-		using: operatorCollection.
-]
+MutationTestingAnalysis class >> testCasesFrom: testClasses mutating: classes using: aMutationTestingConfiguration [
 
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> testCasesFrom: testClasses mutating: classes using: operatorCollection logginIn: aLogger [ 
-	^ self 
-		for: (self testCasesFrom: testClasses)
+	^ self
+		for: ( self testCasesFrom: testClasses )
 		mutating: classes
-		using: operatorCollection
-		loggingIn: aLogger
-]
-
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> testCasesFrom: testClasses mutating: classes using: operatorCollection with: anEvaluationStrategy [
-	
-	^ self 
-		for: (self testCasesFrom: testClasses)
-		mutating: classes
-		using: operatorCollection
-		with: anEvaluationStrategy.
-]
-
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> testCasesFrom: testClasses mutating: classes using: operatorCollection with: anEvaluationStrategy loggingIn: aLogger [
-	
-	^ self 
-		for: (self testCasesFrom: testClasses)
-		mutating: classes
-		using: operatorCollection
-		with: anEvaluationStrategy 
-		loggingIn: aLogger.
-]
-
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> testCasesFrom: testClasses mutating: classes using: operatorCollection with: anEvaluationStrategy with: aGenerationStrategy [
-	
-	^ self 
-		for: (self testCasesFrom: testClasses)
-		mutating: classes
-		using: operatorCollection
-		with: anEvaluationStrategy
-		with: aGenerationStrategy.
-]
-
-{ #category : #'instance creation' }
-MutationTestingAnalysis class >> testCasesFrom: testClasses mutating: classes using: operatorCollection with: anEvaluationStrategy with: aGenerationStrategy loggingIn: aLogger [ 
-	^ self 
-		for: (self testCasesFrom: testClasses)
-		mutating: classes
-		using: operatorCollection
-		with: anEvaluationStrategy
-		with: aGenerationStrategy
-		loggingIn: aLogger
+		using: aMutationTestingConfiguration
 ]
 
 { #category : #'instance creation' }
@@ -200,35 +71,33 @@ MutationTestingAnalysis >> generateCoverageAnalysis [
 
 { #category : #running }
 MutationTestingAnalysis >> generateMutations [
-	mutations := mutationsGenerationStrategy 
+	mutations := configuration generationStrategy 
 		mutationsFor: self
-		loggingIn: logger
+		loggingIn: configuration logger
 ]
 
 { #category : #running }
 MutationTestingAnalysis >> generateResults [
 	particularResults := OrderedCollection new.
 	mutations
-		do: [:aMutation | logger logStartEvaluating: aMutation. 
+		do: [:aMutation | configuration logger logStartEvaluating: aMutation. 
 			particularResults add: (MutantEvaluation
 					for: aMutation
 					using: testCases
-					following: mutantsEvaluationStrategy
+					following: configuration evaluationStrategy
 					andConsidering: self coverageAnalysisResult) value]
 		displayingProgress: 'Evaluating mutants'.
 	^ particularResults
 ]
 
 { #category : #'initialize-release' }
-MutationTestingAnalysis >> initializeFor: someTestCasesReferences mutating: someModelClasses using: operatorCollection with: aMutantsEvaluationStrategy with: aMutationsGenerationStrategy loggingIn: aLogger [ 
+MutationTestingAnalysis >> initializeFor: someTestCasesReferences mutating: someModelClasses using: aConfiguration [
+
 	modelClasses := someModelClasses.
 	testCases := someTestCasesReferences.
-	operators := operatorCollection.
-	mutationsGenerationStrategy := aMutationsGenerationStrategy.
-	mutantsEvaluationStrategy := aMutantsEvaluationStrategy.
 	particularResults := OrderedCollection new.
 	elapsedTime := 0.
-	logger := aLogger
+	configuration := aConfiguration.
 ]
 
 { #category : #accesing }
@@ -246,7 +115,7 @@ MutationTestingAnalysis >> mutations [
 
 { #category : #accesing }
 MutationTestingAnalysis >> operators [
-	^operators 
+	^configuration operators 
 ]
 
 { #category : #results }
@@ -261,7 +130,7 @@ MutationTestingAnalysis >> run [
 	those classes) and execute all mutants in the set of testClases.
 	We obtain a result for each mutant generated"
 	^[testCases do: [ :aTestCase | aTestCase run ].
-	logger logAnalysisStartFor:self.
+	configuration logger logAnalysisStartFor:self.
 	elapsedTime := Time millisecondsToRun: [
 					self generateCoverageAnalysis.
 					self generateMutations.

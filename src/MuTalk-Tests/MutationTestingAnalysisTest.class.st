@@ -1,7 +1,7 @@
 Class {
 	#name : #MutationTestingAnalysisTest,
 	#superclass : #TestCase,
-	#category : #'MuTalk-Tests'
+	#category : 'MuTalk-Tests'
 }
 
 { #category : #accessing }
@@ -12,6 +12,16 @@ MutationTestingAnalysisTest class >> classNamesNotUnderTest [
 { #category : #accessing }
 MutationTestingAnalysisTest class >> packageNamesUnderTest [
 	^ #('MuTalk-Model')
+]
+
+{ #category : #testing }
+MutationTestingAnalysisTest >> defaultConfigurationWith: anOperatorCollection [
+
+	^ MutationTestingConfiguration
+		forAll: anOperatorCollection
+		with: AllMutationsGenerationStrategy new
+		and: AllTestsMethodsRunningMutantEvaluationStrategy new
+		using: NullMutationTestingAnalysisLogger new
 ]
 
 { #category : #accessing }
@@ -80,7 +90,7 @@ MutationTestingAnalysisTest >> testExecutingSimpleMutation [
 	analysis := MutationTestingAnalysis
 		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: self plusForMinusReplacementMutation.
+		using: (self defaultConfigurationWith: self plusForMinusReplacementMutation).
 	analysis run.
 	generalResult := analysis generalResult.
 	results := analysis particularResults.
@@ -98,7 +108,7 @@ MutationTestingAnalysisTest >> testExecutingSimpleMutationForClassMethods [
 	analysis := MutationTestingAnalysis
 		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: self selectForRejectReplacementMutation.
+		using: (self defaultConfigurationWith: self selectForRejectReplacementMutation).
 	analysis run.
 	generalResult := analysis generalResult.
 	results := analysis particularResults.
@@ -116,11 +126,11 @@ MutationTestingAnalysisTest >> testExecutingSimpleMutationWhenNotRunnedAnalysis 
 	analysis := MutationTestingAnalysis
 		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: self plusForMinusReplacementMutation.	"analysis run."
+		using: (self defaultConfigurationWith: self plusForMinusReplacementMutation).	"analysis run."
 	generalResult := analysis generalResult.
 	results := analysis particularResults.
 	self assert: results size equals: 0.
-	self assert: generalResult numberOfEvaluatedMutants = 0
+	self assert: generalResult numberOfEvaluatedMutants equals: 0
 ]
 
 { #category : #testing }
@@ -135,7 +145,7 @@ MutationTestingAnalysisTest >> testExecutingTwoMutantsFromDiferentMethods [
 	analysis := MutationTestingAnalysis
 		testCasesFrom: Array new
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: operatorSelection.
+		using: (self defaultConfigurationWith: operatorSelection).
 	analysis run.
 	results := analysis particularResults.
 	self assert: results size equals: 2.
@@ -154,7 +164,7 @@ MutationTestingAnalysisTest >> testExecutingTwoMutantsFromSameMethod [
 	analysis := MutationTestingAnalysis
 		testCasesFrom: Array new
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: operatorSelection.
+		using: (self defaultConfigurationWith: operatorSelection).
 	analysis run.
 	results := analysis particularResults.
 	self assert: results size equals: 2.
@@ -175,7 +185,7 @@ MutationTestingAnalysisTest >> testExecutingTwoMutations [
 	analysis := MutationTestingAnalysis
 		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: operatorSelection.
+		using: ( self defaultConfigurationWith: operatorSelection ).
 	analysis run.
 	generalResult := analysis generalResult.
 	results := analysis particularResults.

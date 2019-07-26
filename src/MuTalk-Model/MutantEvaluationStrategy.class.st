@@ -4,6 +4,12 @@ Class {
 	#category : #'MuTalk-Model-Mutant evaluation strategies'
 }
 
+{ #category : #comparing }
+MutantEvaluationStrategy >> = anStrategy [
+
+	^self class = anStrategy class
+]
+
 { #category : #evaluating }
 MutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aMutantEvaluation [
 	self subclassResponsibility

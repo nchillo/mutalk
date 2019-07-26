@@ -21,7 +21,7 @@ Class {
 		'killedMutantOperatorFilter',
 		'loggingActivated'
 	],
-	#category : #'MuTalk-UI'
+	#category : 'MuTalk-UI'
 }
 
 { #category : #'instance-creation' }
@@ -944,48 +944,6 @@ MutationTestRunner >> statusColor [
 { #category : #'accessing-testing' }
 MutationTestRunner >> statusText [
 	^ result printString.
-]
-
-{ #category : #private }
-MutationTestRunner >> suiteAllMutantAndAllTests [
-	^ MutationTestingAnalysis
-		testCasesFrom: testClassesSelected
-		mutating: classesSelected
-		using: mutationOperatorsSelected
-		with: AllTestsMethodsRunningMutantEvaluationStrategy new
-		loggingIn: self logger
-]
-
-{ #category : #private }
-MutationTestRunner >> suiteAllMutantAndCoveredTests [
-	^ MutationTestingAnalysis
-		testCasesFrom: testClassesSelected
-		mutating: classesSelected
-		using: mutationOperatorsSelected
-		with: SelectingFromCoverageMutantEvaluationStrategy new
-		loggingIn: self logger
-]
-
-{ #category : #private }
-MutationTestRunner >> suiteCoveredMutantAndAllTests [
-	^ MutationTestingAnalysis
-		testCasesFrom: testClassesSelected
-		mutating: classesSelected
-		using: mutationOperatorsSelected
-		with: AllTestsMethodsRunningMutantEvaluationStrategy new
-		with: SelectingFromCoverageMutationsGenerationStrategy new
-		loggingIn: self logger
-]
-
-{ #category : #private }
-MutationTestRunner >> suiteCoveredMutantAndCoveredTests [
-	^ MutationTestingAnalysis 
-		testCasesFrom: testClassesSelected
-		mutating: classesSelected
-		using: mutationOperatorsSelected
-		with: SelectingFromCoverageMutantEvaluationStrategy new
-		with: SelectingFromCoverageMutationsGenerationStrategy new
-		loggingIn: self logger
 ]
 
 { #category : #'accesing-category' }

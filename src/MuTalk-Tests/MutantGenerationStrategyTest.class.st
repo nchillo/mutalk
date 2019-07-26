@@ -4,22 +4,25 @@ Class {
 	#instVars : [
 		'resource'
 	],
-	#category : #'MuTalk-Tests'
+	#category : 'MuTalk-Tests'
 }
 
 { #category : #testing }
 MutantGenerationStrategyTest >> testSelectingFromCoverageMutationsGenerationShouldOnlyMutateCoveredMethods [
 
-	| classes mutationTestingAnalysis operator |
+	| classes mutationTestingAnalysis operator configuration |
 
 	classes := OrderedCollection with: AuxiliarClassForTestingStrategies.
 	operator := ReplaceIfTrueWithIfFalseMutantOperator new.
+	configuration := MutationTestingConfiguration
+		forAll: ( Array with: operator )
+		with: SelectingFromCoverageMutationsGenerationStrategy new
+		and: AllTestsMethodsRunningMutantEvaluationStrategy new
+		using: NullMutationTestingAnalysisLogger new.
 	mutationTestingAnalysis := MutationTestingAnalysis
 		for: ( MutationTestingAnalysis testCasesReferencesFrom: AuxiliarTestClassForTestingStrategies )
 		mutating: classes
-		using: ( Set with: operator )
-		with: AllTestsMethodsRunningMutantEvaluationStrategy new
-		with: SelectingFromCoverageMutationsGenerationStrategy new.
+		using: configuration.
 	mutationTestingAnalysis run.
 	self
 		assert:

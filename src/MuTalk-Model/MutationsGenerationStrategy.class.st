@@ -4,6 +4,12 @@ Class {
 	#category : #'MuTalk-Model-Mutations generation strategies'
 }
 
+{ #category : #comparing }
+MutationsGenerationStrategy >> = anStrategy [
+
+	^self class = anStrategy class
+]
+
 { #category : #generating }
 MutationsGenerationStrategy >> methodsToMutateFrom:aMutationTestingAnalysis [
 	self subclassResponsibility.

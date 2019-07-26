@@ -1,21 +1,26 @@
 Class {
 	#name : #MutationTestingAnalysisLoggerTest,
 	#superclass : #TestCase,
-	#category : #'MuTalk-Tests'
+	#category : 'MuTalk-Tests'
 }
 
 { #category : #testing }
 MutationTestingAnalysisLoggerTest >> testExecutingSimpleMutation [
 
-	| analysis logger operator |
+	| analysis logger operator configuration |
 
 	logger := MockMutationTestingAnalysisLogger new.
 	operator := ReplacePlusWithMinusMutantOperator new.
+
+	configuration := MutationTestingConfiguration
+		forAll: ( Array with: operator )
+		with: AllMutationsGenerationStrategy new
+		and: AllTestsMethodsRunningMutantEvaluationStrategy new
+		using: logger.
 	analysis := MutationTestingAnalysis
 		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: ( Array with: operator )
-		logginIn: logger.
+		using: configuration.
 	analysis run.
 	self assert: logger loggedStartAnalysis.
 	self
