@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'resource'
 	],
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #accessing }
@@ -41,7 +41,7 @@ MutantEvaluationStrategyTest >> testSelectingFromCoverageEvaluationStrategyShoul
 
 	"tests that the message #testCasesToEvaluateFrom: returns only the test cases that cover the mutated code"
 
-	| classes mutationTestingAnalysis testCases mutation operator evaluationStrategy configuration |
+	| classes mutationTestingAnalysis testCases mutation operator evaluationStrategy configuration  coverage|
 
 	classes := OrderedCollection with: AuxiliarClassForTestingStrategies.
 	operator := ReplaceIfTrueWithIfFalseMutantOperator new.
@@ -55,10 +55,10 @@ MutantEvaluationStrategyTest >> testSelectingFromCoverageEvaluationStrategyShoul
 		for: AuxiliarTestClassForTestingStrategies suite tests
 		mutating: classes
 		using: configuration.
-	mutationTestingAnalysis generateCoverageAnalysis.
+	coverage := mutationTestingAnalysis generateCoverageAnalysis.
 	mutation := ( operator mutationsFor: AuxiliarClassForTestingStrategies >> #method1 )
 		asOrderedCollection first.
-	testCases := evaluationStrategy testCasesToEvaluate: mutation for: mutationTestingAnalysis.
+	testCases := evaluationStrategy testCasesToEvaluate: mutation for: coverage.
 	self
 		assert: ( ( testCases collect: [ :each | each selector ] ) includes: #testMethodThatCoverMethod1 ).
 	self

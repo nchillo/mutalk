@@ -21,7 +21,7 @@ Class {
 		'killedMutantOperatorFilter',
 		'loggingActivated'
 	],
-	#category : 'MuTalk-UI'
+	#category : #'MuTalk-UI'
 }
 
 { #category : #'instance-creation' }
@@ -796,8 +796,10 @@ MutationTestRunner >> removeFiltersFromKilledMutants [
 
 { #category : #actions }
 MutationTestRunner >> reset [
-	self result: MutationTestingGeneralResult empty;
-		 updateResults
+
+	self
+		result: MutationTestingGeneralResult empty;
+		updateResults
 ]
 
 { #category : #'accessing-testing' }
@@ -831,10 +833,9 @@ MutationTestRunner >> runCoveredMutantAndCoveredTests [
 ]
 
 { #category : #actions }
-MutationTestRunner >> runSuite: aMutationTestAnalisys [ 
-	
-	aMutationTestAnalisys run.
-	self result: aMutationTestAnalisys generalResult.
+MutationTestRunner >> runSuite: aMutationTestAnalisys [
+
+	self result: aMutationTestAnalisys run.
 	self updateResults
 ]
 
@@ -933,12 +934,6 @@ MutationTestRunner >> sortClass: aFirstClass before: aSecondClass [
 		(first at: index) == (second at: index)
 			ifFalse: [ ^ (first at: index) name <= (second at: index) name ] ].
 	^ second includes: aFirstClass.
-]
-
-{ #category : #'accessing-testing' }
-MutationTestRunner >> statusColor [
-
-	^result mutationScoreModel color
 ]
 
 { #category : #'accessing-testing' }

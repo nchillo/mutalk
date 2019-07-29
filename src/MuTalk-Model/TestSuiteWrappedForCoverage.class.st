@@ -2,22 +2,22 @@ Class {
 	#name : #TestSuiteWrappedForCoverage,
 	#superclass : #TestSuite,
 	#instVars : [
-		'coverageAnalysis'
+		'coverageContext'
 	],
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Generation'
 }
 
 { #category : #'instance creation' }
-TestSuiteWrappedForCoverage class >> for: aCoverageAnalysis named: aString [
+TestSuiteWrappedForCoverage class >> for: aCoverageContext named: aString [
 
-	^ self new initializeFor: aCoverageAnalysis named: aString
+	^ self new initializeFor: aCoverageContext named: aString
 ]
 
 { #category : #initialization }
-TestSuiteWrappedForCoverage >> initializeFor: aCoverageAnalysis named: aString [
+TestSuiteWrappedForCoverage >> initializeFor: aCoverageContext named: aString [
 
 	self name: aString.
-	coverageAnalysis := aCoverageAnalysis
+	coverageContext := aCoverageContext
 ]
 
 { #category : #running }
@@ -25,10 +25,10 @@ TestSuiteWrappedForCoverage >> run: aResult [
 
 	self tests
 		do: [ :each | 
-			coverageAnalysis currentTest: each.
+			coverageContext currentTest: each.
 			self changed: each.
 			each run: aResult.
-			coverageAnalysis currentTest: nil
+			coverageContext currentTest: nil
 			]
 		displayingProgress: 'Analysing Coverage'
 ]

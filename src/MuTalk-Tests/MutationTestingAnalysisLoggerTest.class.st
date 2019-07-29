@@ -1,7 +1,7 @@
 Class {
 	#name : #MutationTestingAnalysisLoggerTest,
 	#superclass : #TestCase,
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #testing }

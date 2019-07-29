@@ -1,11 +1,11 @@
 Class {
 	#name : #SelectingFromCoverageMutationsGenerationStrategy,
 	#superclass : #MutationsGenerationStrategy,
-	#category : #'MuTalk-Model-Mutations generation strategies'
+	#category : #'MuTalk-Model-Strategies'
 }
 
 { #category : #generating }
-SelectingFromCoverageMutationsGenerationStrategy >> methodsToMutateFrom: aMutationTestingAnalysis [
+SelectingFromCoverageMutationsGenerationStrategy >> methodsToMutateFrom: aCoverageResult [
 
-	^ aMutationTestingAnalysis coverageAnalysisResult coveredMethods
+	^ aCoverageResult coveredMethods
 ]

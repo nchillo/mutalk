@@ -3,43 +3,57 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'methodToTestDictionary',
-		'timeToRunTests'
+		'timeToRunTests',
+		'coverageAnalysis'
 	],
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Coverage'
 }
 
 { #category : #'instance creation' }
-CoverageAnalysisResult class >> from: aDictionaryOfMethodToTestCasesRelations [ 
-	^self new initializeFrom: aDictionaryOfMethodToTestCasesRelations.
-]
+CoverageAnalysisResult class >> for: aCoverageAnalysis from: aDictionaryOfMethodToTestCasesRelations elapsedTime: aTimeToRunTests [
 
-{ #category : #'instance creation' }
-CoverageAnalysisResult class >> from: aDictionaryOfMethodToTestCasesRelations elapsedTime: aTimeToRunTests [
-	^self new initializeFrom: aDictionaryOfMethodToTestCasesRelations elapsedTime: aTimeToRunTests.
+	^ self new
+		initializeFor: aCoverageAnalysis
+		from: aDictionaryOfMethodToTestCasesRelations
+		elapsedTime: aTimeToRunTests
 ]
 
 { #category : #accessing }
 CoverageAnalysisResult >> coveredMethods [
-	^methodToTestDictionary keys asIdentitySet. "select:[:each | (methodToTestDictionary at:each) notEmpty]."
+
+	^ methodToTestDictionary keys asIdentitySet
 ]
 
 { #category : #'initialize-release' }
-CoverageAnalysisResult >> initializeFrom: aDictionaryOfMethodToTestCasesRelations [ 
-	methodToTestDictionary := aDictionaryOfMethodToTestCasesRelations
-]
+CoverageAnalysisResult >> initializeFor: aCoverageAnalysis from: aDictionaryOfMethodToTestCasesRelations elapsedTime: aTimeToRunTests [
 
-{ #category : #'initialize-release' }
-CoverageAnalysisResult >> initializeFrom: aDictionaryOfMethodToTestCasesRelations elapsedTime: aTimeToRunTests [
+	coverageAnalysis := aCoverageAnalysis.
 	methodToTestDictionary := aDictionaryOfMethodToTestCasesRelations.
-	timeToRunTests := aTimeToRunTests.
+	timeToRunTests := aTimeToRunTests
+]
+
+{ #category : #acc }
+CoverageAnalysisResult >> modelClasses [
+
+	^ coverageAnalysis classes
+]
+
+{ #category : #accesing }
+CoverageAnalysisResult >> testCases [
+
+	^ coverageAnalysis testCases
 ]
 
 { #category : #accessing }
-CoverageAnalysisResult >> testCasesThatCovers: aCompiledMethod [ 
-	^methodToTestDictionary at:aCompiledMethod ifAbsent:[OrderedCollection new.].
+CoverageAnalysisResult >> testCasesThatCovers: aCompiledMethod [
+
+	^ methodToTestDictionary
+		at: aCompiledMethod
+		ifAbsent: [ OrderedCollection new ]
 ]
 
 { #category : #accessing }
 CoverageAnalysisResult >> timeToRunTests [
-	^timeToRunTests
+
+	^ timeToRunTests
 ]

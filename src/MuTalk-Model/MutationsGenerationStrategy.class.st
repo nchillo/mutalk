@@ -1,7 +1,7 @@
 Class {
 	#name : #MutationsGenerationStrategy,
 	#superclass : #Object,
-	#category : #'MuTalk-Model-Mutations generation strategies'
+	#category : #'MuTalk-Model-Strategies'
 }
 
 { #category : #comparing }
@@ -11,30 +11,9 @@ MutationsGenerationStrategy >> = anStrategy [
 ]
 
 { #category : #generating }
-MutationsGenerationStrategy >> methodsToMutateFrom:aMutationTestingAnalysis [
-	self subclassResponsibility.
-]
+MutationsGenerationStrategy >> methodsToMutateFrom: aCoverageResult [
 
-{ #category : #generating }
-MutationsGenerationStrategy >> mutationsFor: aMutationTestingAnalysis [ 
-	^ self 
-		mutationsFor: aMutationTestingAnalysis
-		loggingIn: self nullLogger
-]
-
-{ #category : #generating }
-MutationsGenerationStrategy >> mutationsFor: aMutationTestingAnalysis loggingIn: aLogger [ 
-	| mutations |
-	mutations := OrderedCollection new.
-	(self methodsToMutateFrom: aMutationTestingAnalysis) 
-		do: 
-			[ :aMethod | 
-			mutations addAll: (self 
-					mutationsFor: aMethod
-					usingAll: aMutationTestingAnalysis operators
-					logginIn: aLogger) ]
-		displayingProgress: 'Building Mutants'.
-	^ mutations
+	self subclassResponsibility
 ]
 
 { #category : #generating }
@@ -48,6 +27,22 @@ MutationsGenerationStrategy >> mutationsFor: aMethod usingAll: aCollectionOfMuta
 			(aMethod ignoredMutationOperators includes: anOperator class) 
 				ifFalse: [ mutations addAll: (anOperator mutationsFor: aMethod with: parseTree) ].
 			mutations ]
+]
+
+{ #category : #generating }
+MutationsGenerationStrategy >> mutationsFor: aCoverageResult usingAll: operators loggingIn: aLogger [
+
+	| mutations |
+
+	mutations := OrderedCollection new.
+	( self methodsToMutateFrom: aCoverageResult )
+		do: [ :aMethod | 
+			mutations
+				addAll:
+					( self mutationsFor: aMethod usingAll: operators logginIn: aLogger )
+			]
+		displayingProgress: 'Building Mutants'.
+	^ mutations
 ]
 
 { #category : #logging }

@@ -1,7 +1,7 @@
 Class {
 	#name : #AllMutationsGenerationStrategy,
 	#superclass : #MutationsGenerationStrategy,
-	#category : #'MuTalk-Model-Mutations generation strategies'
+	#category : #'MuTalk-Model-Strategies'
 }
 
 { #category : #generating }
@@ -18,9 +18,9 @@ AllMutationsGenerationStrategy >> classesAndMetaclassesFrom: modelClasses [
 ]
 
 { #category : #generating }
-AllMutationsGenerationStrategy >> methodsToMutateFrom: aMutationTestingAnalysis [
+AllMutationsGenerationStrategy >> methodsToMutateFrom: aCoverageResult [
 
-	^ ( self classesAndMetaclassesFrom: aMutationTestingAnalysis modelClasses )
+	^ ( self classesAndMetaclassesFrom: aCoverageResult modelClasses )
 		inject: OrderedCollection new
 		into: [ :methods :aClass | 
 			methods addAll: aClass localMethods.

@@ -3,13 +3,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'classes',
-		'result',
-		'classesAndMetaclasses',
-		'testCases',
-		'currentTest',
-		'testRunningElapsedTime'
+		'testCases'
 	],
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Coverage'
 }
 
 { #category : #'instance creation' }
@@ -18,112 +14,133 @@ CoverageAnalysis class >> for: aCollectionOfClasses running: aCollectionOfTestCa
 ]
 
 { #category : #private }
-CoverageAnalysis >> addTestsFrom: aWrapper to: methodToTestDictionary [ 
+CoverageAnalysis >> addTestsFrom: aWrapper to: methodToTestDictionary [
+
 	aWrapper tests notEmpty
-		ifTrue: [(methodToTestDictionary
+		ifTrue: [ ( methodToTestDictionary
 				at: aWrapper reference compiledMethod
-				ifAbsentPut: [IdentitySet new])
-				addAll: aWrapper tests]
-]
-
-{ #category : #private }
-CoverageAnalysis >> classesAndMetaclasses [
-	classesAndMetaclasses isNil ifTrue:[
-		classesAndMetaclasses := (classes collect:[:aClass | aClass class]) asOrderedCollection.
-		classesAndMetaclasses addAll: classes.].
-	^classesAndMetaclasses.
-
+				ifAbsentPut: [ IdentitySet new ] ) addAll: aWrapper tests
+			]
 ]
 
 { #category : #accessing }
-CoverageAnalysis >> currentTest [
-	^ currentTest 
+CoverageAnalysis >> classes [
+
+	^ classes
 ]
 
-{ #category : #private }
-CoverageAnalysis >> currentTest: aTestCase [
-	currentTest := aTestCase.
+{ #category : #accessing }
+CoverageAnalysis >> classesAndMetaClasses [
+
+	^ classes
+		inject: OrderedCollection new
+		into: [ :allClasses :aClass | 
+			allClasses
+				add: aClass;
+				add: aClass class.
+			allClasses
+			]
 ]
 
 { #category : #private }
 CoverageAnalysis >> flushMethodLookupCaches [
-	Behavior flushCache.
-	
+
+	Behavior flushCache
 ]
 
 { #category : #'initialize-release' }
-CoverageAnalysis >> initializeFor: aCollectionOfClasses running: aCollectionOfTestCases [ 
-	classes := aCollectionOfClasses. 
+CoverageAnalysis >> initializeFor: aCollectionOfClasses running: aCollectionOfTestCases [
+
+	classes := aCollectionOfClasses asOrderedCollection.
 	testCases := aCollectionOfTestCases
 ]
 
 { #category : #private }
-CoverageAnalysis >> installAll: wrappers [ 
+CoverageAnalysis >> installAll: wrappers [
+
 	wrappers do: [ :each | each install ]
 ]
 
 { #category : #private }
 CoverageAnalysis >> methodReferences [
-	^ self classesAndMetaclasses
+
+	^ self classesAndMetaClasses
 		inject: OrderedCollection new
-		into: [:methodReferences :aClass | 
+		into: [ :methodReferences :aClass | 
 			methodReferences
-				addAll: (aClass selectors
-						collect: [:aSelector | RGMethodDefinition class: aClass selector: aSelector]).
-			methodReferences]
-]
-
-{ #category : #private }
-CoverageAnalysis >> methodToTestDictionaryFrom: wrappers [ 
-	^ wrappers
-		inject: IdentityDictionary new
-		into: [:methodToTestDictionary :aWrapper | 
-			self addTestsFrom: aWrapper to: methodToTestDictionary.
-			methodToTestDictionary]
-]
-
-{ #category : #private }
-CoverageAnalysis >> methodWrappersFor: methodReferences [ 
-	^ methodReferences collect: [ :each | MethodWrapperForCoverage on: each for: self ]
-]
-
-{ #category : #accessing }
-CoverageAnalysis >> result [
-	^result
-]
-
-{ #category : #evaluating }
-CoverageAnalysis >> run [
-	| wrappers methodReferences |
-	methodReferences := self methodReferences.
-	wrappers := self methodWrappersFor: methodReferences.
-	self runTestsInstalling: wrappers.
-	result := CoverageAnalysisResult from: (self methodToTestDictionaryFrom: wrappers) elapsedTime: testRunningElapsedTime
-]
-
-{ #category : #private }
-CoverageAnalysis >> runTests [
-
-	| suite |
-
-	testRunningElapsedTime := Time
-		millisecondsToRun: [ suite := TestSuiteWrappedForCoverage
-				for: self
-				named: 'Test Suite for Coverage'.
-			suite addTests: testCases.
-			suite run
+				addAll:
+					( aClass selectors
+						collect: [ :aSelector | RGMethodDefinition class: aClass selector: aSelector ] ).
+			methodReferences
 			]
 ]
 
 { #category : #private }
-CoverageAnalysis >> runTestsInstalling: wrappers [ 
-	[self installAll: wrappers.
-	self flushMethodLookupCaches.
-	self runTests]
-		ensure: [self uninstallAll: wrappers]
+CoverageAnalysis >> methodToTestDictionaryFrom: wrappers [
+
+	^ wrappers
+		inject: IdentityDictionary new
+		into: [ :methodToTestDictionary :aWrapper | 
+			self addTestsFrom: aWrapper to: methodToTestDictionary.
+			methodToTestDictionary
+			]
 ]
 
 { #category : #private }
-CoverageAnalysis >> uninstallAll: wrappers [ 
+CoverageAnalysis >> methodWrappersFor: methodReferences using: aCoverageContext [
+
+	^ methodReferences
+		collect: [ :each | MethodWrapperForCoverage on: each for: aCoverageContext ]
+]
+
+{ #category : #evaluating }
+CoverageAnalysis >> run [
+
+	| wrappers coverageContext elapsedTime |
+
+	coverageContext := CoverageContext new.
+	wrappers := self
+		methodWrappersFor: self methodReferences
+		using: coverageContext.
+	elapsedTime := self
+		runTestsInstalling: wrappers
+		using: coverageContext.
+	^ CoverageAnalysisResult
+		for: self
+		from: ( self methodToTestDictionaryFrom: wrappers )
+		elapsedTime: elapsedTime
+]
+
+{ #category : #private }
+CoverageAnalysis >> runTestsInstalling: wrappers using: coverageContext [
+
+	^ [ self installAll: wrappers.
+	self flushMethodLookupCaches.
+	Time millisecondsToRun: [ self runTestsUsing: coverageContext ]
+	]
+		ensure: [ self uninstallAll: wrappers ]
+]
+
+{ #category : #private }
+CoverageAnalysis >> runTestsUsing: coverageContext [
+
+	| suite |
+
+	suite := TestSuiteWrappedForCoverage
+		for: coverageContext
+		named: 'Test Suite for Coverage'.
+	suite addTests: testCases.
+	suite run
+]
+
+{ #category : #accessing }
+CoverageAnalysis >> testCases [
+
+	^ testCases
+]
+
+{ #category : #private }
+CoverageAnalysis >> uninstallAll: wrappers [
+
 	^ wrappers do: [ :each | each uninstall ]
 ]

@@ -7,7 +7,7 @@ Class {
 		'testCases',
 		'coverageAnalysisResult'
 	],
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Generation'
 }
 
 { #category : #'instance creation' }
@@ -35,11 +35,15 @@ MutantEvaluation >> coverageAnalysisResult [
 
 { #category : #'initialize-release' }
 MutantEvaluation >> initializeCoverageResultIfNil [
-	coverageAnalysisResult 
-		ifNil:[ |coverageAnalysis|
-				coverageAnalysis := CoverageAnalysis for: (OrderedCollection with: mutation originalClass)
-															 running: testCases. 
-				coverageAnalysisResult := coverageAnalysis run;result].
+
+	coverageAnalysisResult
+		ifNil: [ | coverageAnalysis |
+
+			coverageAnalysis := CoverageAnalysis
+				for: ( OrderedCollection with: mutation originalClass )
+				running: testCases.
+			coverageAnalysisResult := coverageAnalysis run
+			]
 ]
 
 { #category : #'initialize-release' }
@@ -59,7 +63,9 @@ MutantEvaluation >> runTests [
 
 	suite := TestSuite named: 'MutationEvaluation'.
 	suite
-		addTests: ( ( strategy testCasesToEvaluate: mutation for: self ) collect: [ :each | each testCase ] ).
+		addTests:
+			( ( strategy testCasesToEvaluate: mutation for: coverageAnalysisResult )
+				collect: [ :each | each testCase ] ).
 	^ [ suite runStoppingOnFirstFailOrError ]
 		on: Error
 		do: [ :ex | nil ]
@@ -76,20 +82,17 @@ MutantEvaluation >> testCases [
 ]
 
 { #category : #private }
-MutantEvaluation >> testResults [ 
+MutantEvaluation >> testResults [
 
-	^ [ self runTests ] valueWithin: (strategy timeoutForTestsOf: self) milliSeconds onTimeout: [ nil ]
+	^ [ self runTests ]
+		valueWithin: ( strategy timeoutForTestsOf: self ) milliSeconds
+		onTimeout: [ nil ]
 ]
 
 { #category : #evaluation }
 MutantEvaluation >> value [
 
 	| testResults |
-
-	Stdio stdout
-		nextPutAll: mutation originalMethod name asString;
-		lf;
-		flush.
 
 	self initializeCoverageResultIfNil.
 	testResults := [ mutation install.

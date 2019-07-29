@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'generalResult'
 	],
-	#category : #'MuTalk-Model-Score'
+	#category : #'MuTalk-Model-Results'
 }
 
 { #category : #'instance creation' }

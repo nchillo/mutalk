@@ -1,10 +1,11 @@
 Class {
 	#name : #SelectingFromCoverageMutantEvaluationStrategy,
 	#superclass : #MutantEvaluationStrategy,
-	#category : #'MuTalk-Model-Mutant evaluation strategies'
+	#category : #'MuTalk-Model-Strategies'
 }
 
 { #category : #private }
-SelectingFromCoverageMutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aMutantEvaluation [  
-	^ aMutantEvaluation coverageAnalysisResult testCasesThatCovers: aMutation originalMethod
+SelectingFromCoverageMutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aCoverageResult [
+
+	^ aCoverageResult testCasesThatCovers: aMutation originalMethod
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #MutationTestingAnalysisTest,
 	#superclass : #TestCase,
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #accessing }
@@ -90,10 +90,10 @@ MutationTestingAnalysisTest >> testExecutingSimpleMutation [
 	analysis := MutationTestingAnalysis
 		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: (self defaultConfigurationWith: self plusForMinusReplacementMutation).
-	analysis run.
-	generalResult := analysis generalResult.
-	results := analysis particularResults.
+		using: ( self defaultConfigurationWith: self plusForMinusReplacementMutation ).
+
+	generalResult := analysis run.
+	results := generalResult particularResults.
 	self assert: results size equals: 1.
 	mutationResult := results first.
 	self assert: mutationResult killed.
@@ -108,29 +108,16 @@ MutationTestingAnalysisTest >> testExecutingSimpleMutationForClassMethods [
 	analysis := MutationTestingAnalysis
 		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: (self defaultConfigurationWith: self selectForRejectReplacementMutation).
-	analysis run.
-	generalResult := analysis generalResult.
-	results := analysis particularResults.
+		using:
+			( self
+				defaultConfigurationWith: self selectForRejectReplacementMutation ).
+
+	generalResult := analysis run.
+	results := generalResult particularResults.
 	self assert: results size equals: 1.
 	mutationResult := results first.
 	self assert: mutationResult killed.
 	self assert: generalResult numberOfKilledMutants equals: 1
-]
-
-{ #category : #testing }
-MutationTestingAnalysisTest >> testExecutingSimpleMutationWhenNotRunnedAnalysis [
-
-	| analysis results generalResult |
-
-	analysis := MutationTestingAnalysis
-		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
-		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: (self defaultConfigurationWith: self plusForMinusReplacementMutation).	"analysis run."
-	generalResult := analysis generalResult.
-	results := analysis particularResults.
-	self assert: results size equals: 0.
-	self assert: generalResult numberOfEvaluatedMutants equals: 0
 ]
 
 { #category : #testing }
@@ -145,9 +132,8 @@ MutationTestingAnalysisTest >> testExecutingTwoMutantsFromDiferentMethods [
 	analysis := MutationTestingAnalysis
 		testCasesFrom: Array new
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: (self defaultConfigurationWith: operatorSelection).
-	analysis run.
-	results := analysis particularResults.
+		using: ( self defaultConfigurationWith: operatorSelection ).
+	results := analysis run particularResults.
 	self assert: results size equals: 2.
 	results do: [ :mutationResult | self deny: mutationResult killed ]
 ]
@@ -164,9 +150,8 @@ MutationTestingAnalysisTest >> testExecutingTwoMutantsFromSameMethod [
 	analysis := MutationTestingAnalysis
 		testCasesFrom: Array new
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: (self defaultConfigurationWith: operatorSelection).
-	analysis run.
-	results := analysis particularResults.
+		using: ( self defaultConfigurationWith: operatorSelection ).
+	results := analysis run particularResults.
 	self assert: results size equals: 2.
 	results do: [ :mutationResult | self deny: mutationResult killed ]
 ]
@@ -186,9 +171,9 @@ MutationTestingAnalysisTest >> testExecutingTwoMutations [
 		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
 		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
 		using: ( self defaultConfigurationWith: operatorSelection ).
-	analysis run.
-	generalResult := analysis generalResult.
-	results := analysis particularResults.
+
+	generalResult := analysis run.
+	results := generalResult particularResults.
 	self assert: results size equals: 2.
 	results do: [ :mutationResult | self assert: mutationResult killed ].
 	self assert: generalResult numberOfKilledMutants equals: 2

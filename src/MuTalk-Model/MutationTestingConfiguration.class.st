@@ -7,7 +7,7 @@ Class {
 		'operators',
 		'logger'
 	],
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Generation'
 }
 
 { #category : #'Instance Creation' }

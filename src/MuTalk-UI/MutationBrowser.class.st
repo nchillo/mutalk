@@ -7,7 +7,7 @@ Class {
 		'particularResultsClassFilter',
 		'mutantEvaluationResult'
 	],
-	#category : 'MuTalk-UI'
+	#category : #'MuTalk-UI'
 }
 
 { #category : #'instance creation' }
@@ -64,14 +64,6 @@ MutationBrowser >> buildParticularResultsWith: aBuilder [
 		getIndex: #particularResultsSelected; 
 		setIndex: #particularResultsSelected:;
 		icon: #getIconForResult:;
-		yourself.
-]
-
-{ #category : #building }
-MutationBrowser >> buildTestResultWith: aBuilder [ 
-	^ aBuilder pluggableTextSpec new
-		model: self;
-		getText: #testResults;
 		yourself.
 ]
 
@@ -155,13 +147,6 @@ MutationBrowser >> filterClassFromParticularResults [
 	self updateParticularResultsList
 ]
 
-{ #category : #filtering }
-MutationBrowser >> filterParticularResultsList [
-	^ self 
-		filter: mutantEvaluationResult particularResults
-		with: particularResultsClassFilter
-]
-
 { #category : #printing }
 MutationBrowser >> getIconForResult: aTest [
 	^ UITheme current questionIcon
@@ -202,11 +187,6 @@ MutationBrowser >> openMutatedMethodBrowser [
 { #category : #opening }
 MutationBrowser >> openResultBrowser [
 	mutantEvaluationResult openResultBrowser
-]
-
-{ #category : #'accessing-particularResults' }
-MutationBrowser >> particularResultsClassesList [
-	^ (mutantEvaluationResult particularResults collect: [ :test | test class name ]) asSet asSortedCollection: [ :a :b | a name <= b name ]
 ]
 
 { #category : #'accessing-particularResults' }
@@ -315,11 +295,4 @@ MutationBrowser >> updateParticularResultsList [
 	self
 		changed: #particularResultsList;
 		changed: #particularResultsSelected
-]
-
-{ #category : #updating }
-MutationBrowser >> updateTestResults [
-	self changed: #testResults;
-		 changed: #killingSuggestions;
-		 changed: #codeDifference
 ]

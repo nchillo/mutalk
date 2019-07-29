@@ -1,7 +1,7 @@
 Class {
 	#name : #MutantEvaluationStrategy,
 	#superclass : #Object,
-	#category : #'MuTalk-Model-Mutant evaluation strategies'
+	#category : #'MuTalk-Model-Strategies'
 }
 
 { #category : #comparing }
@@ -11,7 +11,8 @@ MutantEvaluationStrategy >> = anStrategy [
 ]
 
 { #category : #evaluating }
-MutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aMutantEvaluation [
+MutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aCoverageResult [
+
 	self subclassResponsibility
 ]
 

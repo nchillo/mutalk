@@ -1,11 +1,11 @@
 Class {
 	#name : #MutationTestingGeneralResult,
-	#superclass : #Object,
+	#superclass : #MutationResult,
 	#instVars : [
 		'particularResults',
 		'elapsedTime'
 	],
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Results'
 }
 
 { #category : #'instance creation' }
@@ -28,89 +28,42 @@ MutationTestingGeneralResult class >> for: mutantsEvaluationsResults timed: anEl
 		yourself
 ]
 
-{ #category : #accessing }
-MutationTestingGeneralResult >> aliveMutants [
-	^ particularResults select: [ :evaluationResult | evaluationResult survived ]
-]
-
 { #category : #testing }
 MutationTestingGeneralResult >> elapsedTime [
+
 	^ elapsedTime
 ]
 
-{ #category : #initialize }
+{ #category : #private }
 MutationTestingGeneralResult >> initializeFor: mutantsEvaluationsResults timed: anElapsedTime [
+
 	particularResults := mutantsEvaluationsResults.
 	elapsedTime := anElapsedTime
 ]
 
 { #category : #accessing }
-MutationTestingGeneralResult >> killedMutants [
-	^ particularResults select: [ :evaluationResult | evaluationResult killed ]
-]
+MutationTestingGeneralResult >> particularResults [
 
-{ #category : #accessing }
-MutationTestingGeneralResult >> killedOrTerminatedMutants [
-	^ particularResults select: [ :evaluationResult | evaluationResult killed or: [ evaluationResult terminated ] ]
-]
-
-{ #category : #details }
-MutationTestingGeneralResult >> mutationScore [
-	"Returns the mutation Score of this general result. A mutation score is the
-	killedOrTerminatedMutants / numberOfEvaluatedMutants"
-	self numberOfEvaluatedMutants = 0 ifTrue: [ ^ 0 ].
-	^ (self numberOfKilledOrTerminatedMutants * 100 / self numberOfEvaluatedMutants) asInteger
-]
-
-{ #category : #details }
-MutationTestingGeneralResult >> mutationScoreModel [
-	^MutationScoreBehavior buildFor: self
-]
-
-{ #category : #details }
-MutationTestingGeneralResult >> numberOfAliveMutants [
-	"Returns the number of survived Mutants of this result"
-	^ self aliveMutants size
-]
-
-{ #category : #details }
-MutationTestingGeneralResult >> numberOfEvaluatedMutants [
-	"Returns the number of Mutants Evaluated"
-	^ particularResults size
-]
-
-{ #category : #details }
-MutationTestingGeneralResult >> numberOfKilledMutants [
-	"Returns the number of killed Mutants of this result"
-	^ self killedMutants size
-]
-
-{ #category : #details }
-MutationTestingGeneralResult >> numberOfKilledOrTerminatedMutants [
-	"Returns the number of killed or terminated Mutants of this result"
-	^ self killedOrTerminatedMutants size
-]
-
-{ #category : #details }
-MutationTestingGeneralResult >> numberOfTerminatedMutants [
-	"Returns the number of Mutants terminated"
-	^ self terminatedMutants size
+	^ particularResults
 ]
 
 { #category : #printing }
-MutationTestingGeneralResult >> printDetailedInfoOn: aStream [ 
-	
-	(particularResults 
-		groupedBy:  [:result | result mutant operator]) 
-			keysAndValuesDo: [:key :value | 
-				aStream nextPutAll: key description.
-				aStream nextPutAll: ' - '.
-				aStream nextPutAll: value size printString; cr.
+MutationTestingGeneralResult >> printDetailedInfoOn: aStream [
+
+	( self particularResults
+		groupedBy: [ :result | result mutant operator ] )
+		keysAndValuesDo: [ :key :value | 
+			aStream nextPutAll: key description.
+			aStream nextPutAll: ' - '.
+			aStream
+				nextPutAll: value size printString;
+				cr
 			]
 ]
 
 { #category : #printing }
-MutationTestingGeneralResult >> printOn: aStream [ 
+MutationTestingGeneralResult >> printOn: aStream [
+
 	aStream
 		nextPutAll: self numberOfEvaluatedMutants printString;
 		nextPutAll: ' mutants, ';
@@ -122,9 +75,4 @@ MutationTestingGeneralResult >> printOn: aStream [
 		nextPutAll: ' terminated. Mutation Score: ';
 		nextPutAll: self mutationScore printString;
 		nextPutAll: '%.'
-]
-
-{ #category : #accessing }
-MutationTestingGeneralResult >> terminatedMutants [
-	^ particularResults select: [ :evaluationResult | evaluationResult terminated ]
 ]

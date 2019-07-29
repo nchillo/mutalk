@@ -3,20 +3,22 @@ Class {
 	#superclass : #TestCoverage,
 	#instVars : [
 		'tests',
-		'coverageAnalysis'
+		'coverageContext'
 	],
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Generation'
 }
 
 { #category : #'instance creation' }
-MethodWrapperForCoverage class >> on: aMethodReference for: aCoverageAnalysis [
-	^ self new initializeOn: aMethodReference for: aCoverageAnalysis
+MethodWrapperForCoverage class >> on: aMethodReference for: aCoverageContext [
+
+	^ self new initializeOn: aMethodReference for: aCoverageContext
 ]
 
 { #category : #initialization }
-MethodWrapperForCoverage >> initializeOn: aMethodReference for: aCoverageAnalysis [
+MethodWrapperForCoverage >> initializeOn: aMethodReference for: aCoverageContext [
+
 	self initializeOn: aMethodReference.
-	coverageAnalysis := aCoverageAnalysis.
+	coverageContext := aCoverageContext.
 	tests := Set new
 ]
 
@@ -24,7 +26,7 @@ MethodWrapperForCoverage >> initializeOn: aMethodReference for: aCoverageAnalysi
 MethodWrapperForCoverage >> mark [
 	|currentTest|
 	super mark.
-	currentTest := coverageAnalysis currentTest.
+	currentTest := coverageContext currentTest.
 	currentTest ifNotNil: [tests add: currentTest]. 
 	
 
@@ -32,11 +34,13 @@ MethodWrapperForCoverage >> mark [
 
 { #category : #accessing }
 MethodWrapperForCoverage >> run: aSelector with: anArray in: aReceiver [
+
 	self mark.
 	^ aReceiver withArgs: anArray executeMethod: method
 ]
 
 { #category : #accessing }
 MethodWrapperForCoverage >> tests [
-	^tests
+
+	^ tests
 ]

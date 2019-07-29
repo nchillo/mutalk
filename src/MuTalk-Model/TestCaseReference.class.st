@@ -5,7 +5,7 @@ Class {
 		'class',
 		'selector'
 	],
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Generation'
 }
 
 { #category : #'instance creation' }

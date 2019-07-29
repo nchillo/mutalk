@@ -13,7 +13,7 @@ Class {
 		'aliveMutantList',
 		'killedMutantList'
 	],
-	#category : 'MuTalk-UI'
+	#category : #'MuTalk-UI'
 }
 
 { #category : #'instance creation' }
@@ -310,11 +310,11 @@ MutationTestingAnalysisResultBrowser >> label [
 
 { #category : #accessing }
 MutationTestingAnalysisResultBrowser >> reRun [
-	analysis run.
-	result := analysis generalResult.
+
+	result := analysis run.
 	aliveMutantList := result aliveMutants.
 	killedMutantList := result killedOrTerminatedMutants.
-	self refresh.
+	self refresh
 ]
 
 { #category : #accessing }

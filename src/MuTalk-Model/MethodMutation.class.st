@@ -9,7 +9,7 @@ Class {
 		'mutatedNode',
 		'nodeToMutate'
 	],
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Generation'
 }
 
 { #category : #'instance creation' }

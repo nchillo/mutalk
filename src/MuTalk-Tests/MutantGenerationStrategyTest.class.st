@@ -4,13 +4,13 @@ Class {
 	#instVars : [
 		'resource'
 	],
-	#category : 'MuTalk-Tests'
+	#category : #'MuTalk-Tests'
 }
 
 { #category : #testing }
 MutantGenerationStrategyTest >> testSelectingFromCoverageMutationsGenerationShouldOnlyMutateCoveredMethods [
 
-	| classes mutationTestingAnalysis operator configuration |
+	| classes mutationTestingAnalysis operator configuration result |
 
 	classes := OrderedCollection with: AuxiliarClassForTestingStrategies.
 	operator := ReplaceIfTrueWithIfFalseMutantOperator new.
@@ -20,16 +20,18 @@ MutantGenerationStrategyTest >> testSelectingFromCoverageMutationsGenerationShou
 		and: AllTestsMethodsRunningMutantEvaluationStrategy new
 		using: NullMutationTestingAnalysisLogger new.
 	mutationTestingAnalysis := MutationTestingAnalysis
-		for: ( MutationTestingAnalysis testCasesReferencesFrom: AuxiliarTestClassForTestingStrategies )
+		for:
+			( MutationTestingAnalysis
+				testCasesReferencesFrom: AuxiliarTestClassForTestingStrategies )
 		mutating: classes
 		using: configuration.
-	mutationTestingAnalysis run.
+	result := mutationTestingAnalysis run.
 	self
 		assert:
-			( ( mutationTestingAnalysis mutations collect: [ :each | each originalMethod selector ] )
+			( ( result mutations collect: [ :each | each originalMethod selector ] )
 				includes: #method1 ).
 	self
 		deny:
-			( ( mutationTestingAnalysis mutations collect: [ :each | each originalMethod selector ] )
+			( ( result mutations collect: [ :each | each originalMethod selector ] )
 				includes: #aNotCoveredMethod )
 ]

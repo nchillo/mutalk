@@ -1,7 +1,7 @@
 Class {
 	#name : #MethodInstaller,
 	#superclass : #Object,
-	#category : #'MuTalk-Model'
+	#category : #'MuTalk-Model-Generation'
 }
 
 { #category : #installing }

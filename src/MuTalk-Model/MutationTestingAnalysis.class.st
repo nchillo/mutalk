@@ -3,9 +3,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'modelClasses',
-		'particularResults',
-		'elapsedTime',
-		'mutations',
 		'testCases',
 		'coverageAnalysisResult',
 		'configuration'
@@ -57,37 +54,37 @@ MutationTestingAnalysis >> coverageAnalysisResult [
 	^coverageAnalysisResult
 ]
 
-{ #category : #results }
-MutationTestingAnalysis >> generalResult [
-	^ MutationTestingGeneralResult
-		for: particularResults
-		timed: (Duration nanoSeconds: (Duration milliSeconds: elapsedTime) nanoSeconds)
-]
-
 { #category : #running }
 MutationTestingAnalysis >> generateCoverageAnalysis [
-	coverageAnalysisResult := (CoverageAnalysis for: self modelClasses running: testCases) run; result
+
+	^ ( CoverageAnalysis for: self modelClasses running: testCases ) run
 ]
 
 { #category : #running }
-MutationTestingAnalysis >> generateMutations [
-	mutations := configuration generationStrategy 
-		mutationsFor: self
+MutationTestingAnalysis >> generateMutationsUsing: aCoverageAnalysis [
+
+	^ configuration generationStrategy
+		mutationsFor: aCoverageAnalysis
+		usingAll: configuration operators
 		loggingIn: configuration logger
 ]
 
 { #category : #running }
-MutationTestingAnalysis >> generateResults [
-	particularResults := OrderedCollection new.
-	mutations
-		do: [:aMutation | configuration logger logStartEvaluating: aMutation. 
-			particularResults add: (MutantEvaluation
-					for: aMutation
-					using: testCases
-					following: configuration evaluationStrategy
-					andConsidering: self coverageAnalysisResult) value]
-		displayingProgress: 'Evaluating mutants'.
-	^ particularResults
+MutationTestingAnalysis >> generateResultsForAll: someMutations [
+
+	^ someMutations
+		inject: OrderedCollection new
+		into: [ :results :aMutation | 
+			configuration logger logStartEvaluating: aMutation.
+			results
+				add:
+					( MutantEvaluation
+						for: aMutation
+						using: testCases
+						following: configuration evaluationStrategy
+						andConsidering: self coverageAnalysisResult ) value.
+			results
+			]
 ]
 
 { #category : #'initialize-release' }
@@ -95,8 +92,6 @@ MutationTestingAnalysis >> initializeFor: someTestCasesReferences mutating: some
 
 	modelClasses := someModelClasses.
 	testCases := someTestCasesReferences.
-	particularResults := OrderedCollection new.
-	elapsedTime := 0.
 	configuration := aConfiguration.
 ]
 
@@ -109,37 +104,36 @@ MutationTestingAnalysis >> modelClasses [
 ]
 
 { #category : #accesing }
-MutationTestingAnalysis >> mutations [
-	^mutations
-]
-
-{ #category : #accesing }
 MutationTestingAnalysis >> operators [
 	^configuration operators 
 ]
 
-{ #category : #results }
-MutationTestingAnalysis >> particularResults [
-	^ particularResults
-]
-
 { #category : #running }
 MutationTestingAnalysis >> run [
+
 	"Obtain mutants applying the operators in the classes (or
 	methods of
 	those classes) and execute all mutants in the set of testClases.
 	We obtain a result for each mutant generated"
-	^[testCases do: [ :aTestCase | aTestCase run ].
-	configuration logger logAnalysisStartFor:self.
-	elapsedTime := Time millisecondsToRun: [
-					self generateCoverageAnalysis.
-					self generateMutations.
-					self generateResults.].
-					true]
-						on: TestsWithErrorsException
-						do: [:ex | 
-							self inform: 'Your tests have Errors or Failures. Please correct them.'.
-							ex return: false]
+
+	^ [ | mutantsResults time |
+
+	testCases do: [ :aTestCase | aTestCase run ].
+	configuration logger logAnalysisStartFor: self.
+
+	time := Time
+		millisecondsToRun: [ | coverageAnalysis |
+
+			coverageAnalysis := self generateCoverageAnalysis.
+			mutantsResults := self
+				generateResultsForAll: ( self generateMutationsUsing: coverageAnalysis )
+			].
+	MutationTestingGeneralResult
+		for: mutantsResults
+		timed: ( Duration nanoSeconds: ( Duration milliSeconds: time ) nanoSeconds )
+	]
+		on: TestsWithErrorsException
+		do: [ :ex | MutationTestingErrorResult describedAs: 'Tests con errores' ]
 ]
 
 { #category : #accesing }
