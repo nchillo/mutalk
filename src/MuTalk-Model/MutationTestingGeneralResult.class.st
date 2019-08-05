@@ -41,6 +41,12 @@ MutationTestingGeneralResult >> initializeFor: mutantsEvaluationsResults timed: 
 	elapsedTime := anElapsedTime
 ]
 
+{ #category : #printing }
+MutationTestingGeneralResult >> message [
+
+	^ ''
+]
+
 { #category : #accessing }
 MutationTestingGeneralResult >> particularResults [
 

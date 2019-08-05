@@ -5,6 +5,24 @@ Class {
 }
 
 { #category : #accessing }
+MutationResult class >> neoJsonMapping: mapper [
+
+	mapper
+		for: self
+		do: [ :mapping | 
+			mapping
+				mapAccessors:
+					#(numberOfEvaluatedMutants numberOfKilledMutants numberOfAliveMutants numberOfTerminatedMutants mutationScore elapsedTime message)
+			].
+	mapper
+		for: Duration
+		customDo: [ :mapping | 
+			mapping decoder: [ :string | Duration fromString: string ].
+			mapping encoder: [ :duration | duration printString ]
+			]
+]
+
+{ #category : #accessing }
 MutationResult >> aliveMutants [
 
 	^self particularResults
@@ -30,6 +48,12 @@ MutationResult >> killedOrTerminatedMutants [
 	^ self particularResults
 		select:
 			[ :evaluationResult | evaluationResult killed or: [ evaluationResult terminated ] ]
+]
+
+{ #category : #printing }
+MutationResult >> message [
+
+	self subclassResponsibility
 ]
 
 { #category : #details }

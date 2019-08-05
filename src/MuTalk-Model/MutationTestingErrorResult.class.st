@@ -25,6 +25,12 @@ MutationTestingErrorResult >> initializeDescribedAs: aMessage [
 	message := aMessage
 ]
 
+{ #category : #printing }
+MutationTestingErrorResult >> message [
+
+	 ^ message
+]
+
 { #category : #accessing }
 MutationTestingErrorResult >> particularResults [
 
