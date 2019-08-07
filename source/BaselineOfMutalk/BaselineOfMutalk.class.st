@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfMuTalk,
+	#name : #BaselineOfMutalk,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfMuTalk'
+	#category : #BaselineOfMutalk
 }
 
 { #category : #baselines }
-BaselineOfMuTalk >> baseline: spec [
+BaselineOfMutalk >> baseline: spec [
 
 	<baseline>
 	spec
@@ -20,7 +20,7 @@ BaselineOfMuTalk >> baseline: spec [
 ]
 
 { #category : #baselines }
-BaselineOfMuTalk >> baselineMutalk: spec [
+BaselineOfMutalk >> baselineMutalk: spec [
 
 	spec
 		package: 'Mutalk-Model' with: [ spec requires: #('testCoverage' 'NeoJSON') ];
@@ -33,7 +33,7 @@ BaselineOfMuTalk >> baselineMutalk: spec [
 ]
 
 { #category : #initialization }
-BaselineOfMuTalk >> setUpDependencies: spec [
+BaselineOfMutalk >> setUpDependencies: spec [
 
 	spec for: #'pharo6.x' do: [ spec group: 'testCoverage' with: #() ].
 	spec
