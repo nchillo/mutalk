@@ -25,10 +25,6 @@ MutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aCoverageResult 
 { #category : #evaluating }
 MutantEvaluationStrategy >> timeoutForTestsOf: aMutantEvaluation [
 
-	| estimatedTimeout |
-
-	estimatedTimeout := ( aMutantEvaluation coverageAnalysisResult timeToRunTests * 5 ) milliSeconds.
-	^ estimatedTimeout < self minimumTimeout
-		ifTrue: [ self minimumTimeout ]
-		ifFalse: [ estimatedTimeout ]
+	^ ( aMutantEvaluation coverageAnalysisResult timeToRunTests * 5 ) milliSeconds
+		max: self minimumTimeout
 ]
