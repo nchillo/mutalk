@@ -7,7 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 AuxiliarTestClassForTestingStrategies >> testMethodThatCoverMethod1 [
 
-	self assert: AuxiliarClassForTestingStrategies new method1 = 1. 
+	self assert: AuxiliarClassForTestingStrategies new method1 equals: 1. 
 	
 	
 ]
@@ -15,7 +15,7 @@ AuxiliarTestClassForTestingStrategies >> testMethodThatCoverMethod1 [
 { #category : #'as yet unclassified' }
 AuxiliarTestClassForTestingStrategies >> testMethodThatCoverMethod2 [
 
-	self assert: AuxiliarClassForTestingStrategies new method2 = 2. 
+	self assert: AuxiliarClassForTestingStrategies new method2 equals: 2. 
 	
 	
 ]

@@ -96,26 +96,27 @@ MutationTestingAnalysisTest >> testExecutingSimpleMutation [
 	results := generalResult particularResults.
 	self assert: results size equals: 1.
 	mutationResult := results first.
+	self deny: mutationResult survived.
+	self deny: mutationResult terminated.
 	self assert: mutationResult killed.
 	self assert: generalResult numberOfKilledMutants equals: 1
 ]
 
 { #category : #testing }
 MutationTestingAnalysisTest >> testExecutingSimpleMutationForClassMethods [
-
 	| analysis results generalResult mutationResult |
-
 	analysis := MutationTestingAnalysis
-		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
-		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
+		testCasesFrom: (Array with: AuxiliarClassForMutationTestingAnalysisTest)
+		mutating: (Array with: AuxiliarClassForMutationTestingAnalysis)
 		using:
-			( self
-				defaultConfigurationWith: self selectForRejectReplacementMutation ).
-
+			(self
+				defaultConfigurationWith: self selectForRejectReplacementMutation).
 	generalResult := analysis run.
 	results := generalResult particularResults.
 	self assert: results size equals: 1.
 	mutationResult := results first.
+	self deny: mutationResult survived.
+	self deny: mutationResult terminated.
 	self assert: mutationResult killed.
 	self assert: generalResult numberOfKilledMutants equals: 1
 ]
@@ -158,23 +159,24 @@ MutationTestingAnalysisTest >> testExecutingTwoMutantsFromSameMethod [
 
 { #category : #testing }
 MutationTestingAnalysisTest >> testExecutingTwoMutations [
-
 	"Execute 2 diferent mutations #ifTrue-->#ifFalse: and
 	#+-->#-"
 
 	| analysis results generalResult operatorSelection |
-
 	operatorSelection := OrderedCollection new.
 	operatorSelection addAll: self plusForMinusReplacementMutation.
 	operatorSelection addAll: self ifTrueForIfFalseReplacementMutation.
 	analysis := MutationTestingAnalysis
-		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
-		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
-		using: ( self defaultConfigurationWith: operatorSelection ).
-
+		testCasesFrom: (Array with: AuxiliarClassForMutationTestingAnalysisTest)
+		mutating: (Array with: AuxiliarClassForMutationTestingAnalysis)
+		using: (self defaultConfigurationWith: operatorSelection).
 	generalResult := analysis run.
 	results := generalResult particularResults.
 	self assert: results size equals: 2.
-	results do: [ :mutationResult | self assert: mutationResult killed ].
+	results
+		do: [ :mutationResult | 
+			self deny: mutationResult survived.
+			self deny: mutationResult terminated.
+			self assert: mutationResult killed ].
 	self assert: generalResult numberOfKilledMutants equals: 2
 ]
