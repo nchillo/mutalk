@@ -9,24 +9,22 @@ Class {
 }
 
 { #category : #'instance creation' }
-TestCaseReference class >> for: aSelector in: aClass [ 
-	^self new initializeFor: aSelector in: aClass
-]
+TestCaseReference class >> for: aSelector in: aClass [
 
-{ #category : #'instance creation' }
-TestCaseReference class >> forTestCase: aTestCase [ 
-	^self for: aTestCase selector in: aTestCase class
+	^ self new initializeFor: aSelector in: aClass
 ]
 
 { #category : #initialize }
 TestCaseReference >> initializeFor: aSelector in: aClass [
+
 	class := aClass.
-	selector := aSelector.
+	selector := aSelector
 ]
 
 { #category : #evaluating }
 TestCaseReference >> resources [
-	^self testCase resources
+
+	^ self testCase resources
 ]
 
 { #category : #evaluating }
@@ -42,10 +40,12 @@ TestCaseReference >> run [
 
 { #category : #evaluating }
 TestCaseReference >> run: aTestResult [
-	^self testCase run: aTestResult
+
+	^ self testCase run: aTestResult
 ]
 
 { #category : #evaluating }
 TestCaseReference >> testCase [
-	^class selector: selector.
+
+	^ class selector: selector
 ]

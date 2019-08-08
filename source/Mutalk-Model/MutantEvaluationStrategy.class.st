@@ -18,5 +18,6 @@ MutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aCoverageResult 
 
 { #category : #evaluating }
 MutantEvaluationStrategy >> timeoutForTestsOf: aMutantEvaluation [
-	^aMutantEvaluation coverageAnalysisResult timeToRunTests * 3
+
+	^ aMutantEvaluation coverageAnalysisResult timeToRunTests * 10
 ]

@@ -5,16 +5,19 @@ Class {
 }
 
 { #category : #logging }
-MutationTestingAnalysisLogger >> logAnalysisStartFor: aMutationTestingAnalysis [ 
-	self subclassResponsibility 
+MutationTestingAnalysisLogger >> logAnalysisStartFor: aMutationTestingAnalysis [
+
+	self subclassResponsibility
 ]
 
 { #category : #logging }
 MutationTestingAnalysisLogger >> logStartBuildingMutantionsFor: aCompiledMethod using: aMutantOperator [
-	self subclassResponsibility 
+
+	self subclassResponsibility
 ]
 
 { #category : #logging }
-MutationTestingAnalysisLogger >> logStartEvaluating: aMethodMutation [ 
+MutationTestingAnalysisLogger >> logStartEvaluating: aMethodMutation [
+
 	self subclassResponsibility
 ]

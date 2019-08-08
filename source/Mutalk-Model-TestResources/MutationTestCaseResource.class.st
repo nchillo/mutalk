@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 MutationTestCaseResource class >> packageNamesUnderTest [
-	^ #('MuTalk-Model')
+	^ #('Mutalk-Model')
 ]
 
 { #category : #accessing }

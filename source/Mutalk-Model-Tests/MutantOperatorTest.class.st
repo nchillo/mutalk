@@ -11,7 +11,7 @@ MutantOperatorTest class >> isAbstract [
 
 { #category : #accessing }
 MutantOperatorTest class >> packageNamesUnderTest [
-	^ #('MuTalk-Model')
+	^ #('Mutalk-Model')
 ]
 
 { #category : #asserts }

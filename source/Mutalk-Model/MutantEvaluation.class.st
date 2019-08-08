@@ -11,20 +11,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-MutantEvaluation class >> for: aMutation using:aCollectionOftestCases following: aMutantEvaluationStrategy [ 
-	^self for: aMutation using: aCollectionOftestCases following: aMutantEvaluationStrategy andConsidering:nil  
-]
+MutantEvaluation class >> for: aMutation using: aCollectionOftestCases following: aMutantEvaluationStrategy andConsidering: aCoverageAnalysisResult [
 
-{ #category : #'instance creation' }
-MutantEvaluation class >> for: aMutation using: aCollectionOftestCases following: aMutantEvaluationStrategy and: aTestSelectionStrategy [ 
-	|tests|
-	tests := aTestSelectionStrategy testCasesFromReferencies: aCollectionOftestCases.
-	^self for: aMutation using: tests following: aMutantEvaluationStrategy andConsidering:nil
-]
-
-{ #category : #'instance creation' }
-MutantEvaluation class >> for: aMutation using:aCollectionOftestCases following: aMutantEvaluationStrategy andConsidering: aCoverageAnalysisResult [ 
-	^self new initializeFor: aMutation using:aCollectionOftestCases following: aMutantEvaluationStrategy andConsidering: aCoverageAnalysisResult
+	^ self new
+		initializeFor: aMutation
+		using: aCollectionOftestCases
+		following: aMutantEvaluationStrategy
+		andConsidering: aCoverageAnalysisResult
 ]
 
 { #category : #accessing }
@@ -47,11 +40,12 @@ MutantEvaluation >> initializeCoverageResultIfNil [
 ]
 
 { #category : #'initialize-release' }
-MutantEvaluation >> initializeFor: aMutation using:aCollectionOftestCases following: aMutantEvaluationStrategy andConsidering: aCoverageAnalysisResult [
+MutantEvaluation >> initializeFor: aMutation using: aCollectionOftestCases following: aMutantEvaluationStrategy andConsidering: aCoverageAnalysisResult [
+
 	mutation := aMutation.
 	testCases := aCollectionOftestCases.
 	strategy := aMutantEvaluationStrategy.
-	coverageAnalysisResult := aCoverageAnalysisResult	
+	coverageAnalysisResult := aCoverageAnalysisResult
 ]
 
 { #category : #private }
@@ -69,16 +63,6 @@ MutantEvaluation >> runTests [
 	^ [ suite runStoppingOnFirstFailOrError ]
 		on: Error
 		do: [ :ex | nil ]
-]
-
-{ #category : #accessing }
-MutantEvaluation >> strategy [
-	^strategy
-]
-
-{ #category : #accessing }
-MutantEvaluation >> testCases [
-	^testCases
 ]
 
 { #category : #private }

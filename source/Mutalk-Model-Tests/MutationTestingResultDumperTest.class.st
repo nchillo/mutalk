@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 MutationTestingResultDumperTest class >> packageNamesUnderTest [
-	^ #('MuTalk-Model')
+	^ #('Mutalk-Model')
 ]
 
 { #category : #accessing }
@@ -84,7 +84,7 @@ MutationTestingResultDumperTest >> testDumpingEmptyResult [
 
 	emptyResult := self mutationEngineGeneralEmptyResult.
 	self
-		assert: ( NeoJSONWriter toString: emptyResult )
+		assert: (MutalkResultDumper for: emptyResult ) value
 		equals: '{"numberOfEvaluatedMutants":0,"numberOfKilledMutants":0,"numberOfAliveMutants":0,"numberOfTerminatedMutants":0,"mutationScore":0,"elapsedTime":"0:00:00:00","message":""}'
 ]
 
@@ -97,7 +97,7 @@ MutationTestingResultDumperTest >> testDumpingErrorResult [
 
 	emptyResult := self mutationErrorResult.
 	self
-		assert: ( NeoJSONWriter toString: emptyResult )
+		assert: (MutalkResultDumper for: emptyResult ) value
 		equals: '{"numberOfEvaluatedMutants":0,"numberOfKilledMutants":0,"numberOfAliveMutants":0,"numberOfTerminatedMutants":0,"mutationScore":0,"elapsedTime":"0:00:00:00","message":"Error"}'
 ]
 
@@ -111,7 +111,7 @@ MutationTestingResultDumperTest >> testDumpingWithOnlyOneAliveMutant [
 	oneKilledMutantResult := self
 		mutationEngineGeneralResultWithOneAliveMutant.
 	self
-		assert: ( NeoJSONWriter toString: oneKilledMutantResult )
+		assert: (MutalkResultDumper for: oneKilledMutantResult ) value
 		equals:
 			'{"numberOfEvaluatedMutants":1,"numberOfKilledMutants":0,"numberOfAliveMutants":1,"numberOfTerminatedMutants":0,"mutationScore":0,"elapsedTime":"0:00:00:00","message":""}'
 ]
@@ -126,7 +126,7 @@ MutationTestingResultDumperTest >> testDumpingWithOnlyOneKilledMutantByError [
 	oneKilledMutantResult := self
 		mutationEngineGeneralResultWithOneKilledMutantByError.
 	self
-		assert: ( NeoJSONWriter toString: oneKilledMutantResult )
+		assert: (MutalkResultDumper for: oneKilledMutantResult ) value
 		equals:
 			'{"numberOfEvaluatedMutants":1,"numberOfKilledMutants":1,"numberOfAliveMutants":0,"numberOfTerminatedMutants":0,"mutationScore":100,"elapsedTime":"0:00:00:00","message":""}'
 ]
@@ -140,7 +140,7 @@ MutationTestingResultDumperTest >> testDumpingWithOnlyOneKilledMutantByFailure [
 
 	oneKilledMutantResult := self mutationEngineGeneralResultWithOneKilledMutantByFailure.
 	self
-		assert: ( NeoJSONWriter toString: oneKilledMutantResult )
+		assert: (MutalkResultDumper for: oneKilledMutantResult ) value
 		equals:
 			'{"numberOfEvaluatedMutants":1,"numberOfKilledMutants":1,"numberOfAliveMutants":0,"numberOfTerminatedMutants":0,"mutationScore":100,"elapsedTime":"0:00:00:00","message":""}'
 ]
@@ -155,7 +155,7 @@ MutationTestingResultDumperTest >> testDumpingWithOnlyOneTerminatedMutant [
 	oneKilledMutantResult := self
 		mutationEngineGeneralResultWithOneTerminatedMutant.
 	self
-		assert: ( NeoJSONWriter toString: oneKilledMutantResult )
+		assert: (MutalkResultDumper for: oneKilledMutantResult ) value
 		equals:
 			'{"numberOfEvaluatedMutants":1,"numberOfKilledMutants":0,"numberOfAliveMutants":0,"numberOfTerminatedMutants":1,"mutationScore":100,"elapsedTime":"0:00:00:00","message":""}'
 ]

@@ -10,7 +10,7 @@ Class {
 
 { #category : #accessing }
 MethodInstallerTest class >> packageNamesUnderTest [
-	^ #('MuTalk-Model')
+	^ #('Mutalk-Model')
 ]
 
 { #category : #'test resources' }

@@ -11,7 +11,7 @@ MutationTestingAnalysisTest class >> classNamesNotUnderTest [
 
 { #category : #accessing }
 MutationTestingAnalysisTest class >> packageNamesUnderTest [
-	^ #('MuTalk-Model')
+	^ #('Mutalk-Model')
 ]
 
 { #category : #testing }

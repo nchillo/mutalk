@@ -103,11 +103,6 @@ MutationTestingAnalysis >> modelClasses [
 				anySatisfy: [:classToFilter | class includesBehavior: classToFilter]]
 ]
 
-{ #category : #accesing }
-MutationTestingAnalysis >> operators [
-	^configuration operators 
-]
-
 { #category : #running }
 MutationTestingAnalysis >> run [
 
@@ -120,17 +115,13 @@ MutationTestingAnalysis >> run [
 
 	testCases do: [ :aTestCase | aTestCase run ].
 	configuration logger logAnalysisStartFor: self.
-
 	time := Time
 		millisecondsToRun: [ | coverageAnalysis |
 
 			coverageAnalysis := self generateCoverageAnalysis.
-			mutantsResults := self
-				generateResultsForAll: ( self generateMutationsUsing: coverageAnalysis )
+			mutantsResults := self generateResultsForAll: ( self generateMutationsUsing: coverageAnalysis )
 			].
-	MutationTestingGeneralResult
-		for: mutantsResults
-		timed: ( Duration nanoSeconds: ( Duration milliSeconds: time ) nanoSeconds )
+	MutationTestingGeneralResult for: mutantsResults timed: ( Duration milliSeconds: time )
 	]
 		on: TestsWithErrorsException
 		do: [ :ex | MutationTestingErrorResult describedAs: 'Tests con errores' ]
@@ -140,10 +131,4 @@ MutationTestingAnalysis >> run [
 MutationTestingAnalysis >> testBaseClasses [
 
 	^OrderedCollection with: TestCase with: TestResource
-]
-
-{ #category : #accesing }
-MutationTestingAnalysis >> testCases [
-	^testCases
-
 ]

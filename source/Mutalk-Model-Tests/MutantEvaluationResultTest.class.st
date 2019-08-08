@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 MutantEvaluationResultTest class >> packageNamesUnderTest [
-	^ #('MuTalk-Model')
+	^ #('Mutalk-Model')
 ]
 
 { #category : #accessing }

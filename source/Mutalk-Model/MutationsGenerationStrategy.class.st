@@ -44,9 +44,3 @@ MutationsGenerationStrategy >> mutationsFor: aCoverageResult usingAll: operators
 		displayingProgress: 'Building Mutants'.
 	^ mutations
 ]
-
-{ #category : #logging }
-MutationsGenerationStrategy >> nullLogger [
-
-	^ NullMutationTestingAnalysisLogger new.
-]
