@@ -68,9 +68,7 @@ MutantEvaluation >> runTests [
 { #category : #private }
 MutantEvaluation >> testResults [
 
-	^ [ self runTests ]
-		valueWithin: ( strategy timeoutForTestsOf: self ) milliSeconds
-		onTimeout: [ nil ]
+	^ [ self runTests ] valueWithin: ( strategy timeoutForTestsOf: self ) onTimeout: [ nil ]
 ]
 
 { #category : #evaluation }

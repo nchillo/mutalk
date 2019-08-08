@@ -17,7 +17,7 @@ MutationTestingConfiguration class >> default [
 		forAll: MutantOperator contents
 		with: AllMutationsGenerationStrategy new
 		and: AllTestsMethodsRunningMutantEvaluationStrategy new
-		using: (MutationTestingAnalysisFileLogger toFileNamed: 'logmutation.txt')
+		using: NullMutationTestingAnalysisLogger new
 ]
 
 { #category : #'Instance Creation' }

@@ -10,6 +10,12 @@ MutantEvaluationStrategy >> = anStrategy [
 	^self class = anStrategy class
 ]
 
+{ #category : #comparing }
+MutantEvaluationStrategy >> minimumTimeout [
+
+	^1 seconds  
+]
+
 { #category : #evaluating }
 MutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aCoverageResult [
 
@@ -19,5 +25,10 @@ MutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aCoverageResult 
 { #category : #evaluating }
 MutantEvaluationStrategy >> timeoutForTestsOf: aMutantEvaluation [
 
-	^ aMutantEvaluation coverageAnalysisResult timeToRunTests * 10
+	| estimatedTimeout |
+
+	estimatedTimeout := ( aMutantEvaluation coverageAnalysisResult timeToRunTests * 5 ) milliSeconds.
+	^ estimatedTimeout < self minimumTimeout
+		ifTrue: [ self minimumTimeout ]
+		ifFalse: [ estimatedTimeout ]
 ]
