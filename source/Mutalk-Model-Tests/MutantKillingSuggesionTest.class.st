@@ -173,7 +173,7 @@ MutantKillingSuggesionTest >> testSuggestionToKillReplaceAndForOr [
 	self
 		assert: ( MutantKillingSuggestionGenerator new suggestionFor: mutation ) string
 		equals:
-			'It is missing a test case where only one of the conditions 2 = ( 1 + 1 ) and [ Set new isEmpty ] is True.'.
+			'It is missing a test case where only one of the conditions ', (RBParser parseExpression: '2 = (1 + 1)') formattedCode asText ,' and [ Set new isEmpty ] is True.'.
 	self
 		assert: ( MutantKillingSuggestionGenerator new suggestionFor: mutationWithAssignment ) string
 		equals:
@@ -284,7 +284,7 @@ MutantKillingSuggesionTest >> testSuggestionToKillReplaceOrForAnd [
 	self
 		assert: ( MutantKillingSuggestionGenerator new suggestionFor: mutation ) asString
 		equals:
-			'It is missing a test case where only one of the conditions 2 = ( 1 + 1 ) and [ Set new isEmpty ] is True.'.
+			'It is missing a test case where only one of the conditions ',  (RBParser parseExpression: '2 = (1 + 1)') formattedCode asText ,' and [ Set new isEmpty ] is True.'.
 	self
 		assert: ( MutantKillingSuggestionGenerator new suggestionFor: mutationWithAssignment ) asString
 		equals:
