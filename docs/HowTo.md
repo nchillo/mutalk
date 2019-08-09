@@ -36,3 +36,15 @@ analysis := MutationTestingAnalysis
     using: (MutationTestingConfiguration defaultWithLogging).
 result := analysis run.
 ```
+
+> My image is freezing when running a mutation testing analysis, what can I do?
+
+You can can Run using log configuration. It will generate a file called MutationTesting.log which lets you know which mutant is causing your image to freeze. You can install the mutation by hand, and then debug running your tests. When you know witch mutant is causing the freeze you can add a pragma like this one:
+
+```smalltalk
+handles: aSignal
+	<ignoreForMutations: #(#RemoveCaretOperator)>
+	^ (self class handles: aSignal) and: [ aSignal tag = tag ]
+```
+
+This will exclude the mutation generated from RemoveCaretOperator in method #handles.
