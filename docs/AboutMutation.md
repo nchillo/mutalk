@@ -38,6 +38,3 @@ See [How To](HowTo.md) for some examples.
 
 No, it doesn't. It complements coverage. You could have perfect coverage but not so good Mutation Score. That means your tests can be better!
 
-> My image is freezing when running a mutation testing analysis, what can I do?
-
-You can can open the Mutation Testing Runner and then Activate Logging to File. It will generate a file called MutationTestingLog.txt which lets you know which mutant is causing your image to freeze. You can install the mutation by hand, and then debug running your tests. You will probably need to exclude a class or an operator from the analysis.
