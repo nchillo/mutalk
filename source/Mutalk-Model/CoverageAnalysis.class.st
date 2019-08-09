@@ -2,15 +2,16 @@ Class {
 	#name : #CoverageAnalysis,
 	#superclass : #Object,
 	#instVars : [
-		'classes',
-		'testCases'
+		'testCases',
+		'modelMethods'
 	],
 	#category : #'Mutalk-Model-Coverage'
 }
 
 { #category : #'instance creation' }
-CoverageAnalysis class >> for: aCollectionOfClasses running: aCollectionOfTestCases [
-	^self new initializeFor: aCollectionOfClasses running: aCollectionOfTestCases
+CoverageAnalysis class >> for: aCollectionOfMethods running: aCollectionOfTestCases [
+
+	^ self new initializeFor: aCollectionOfMethods running: aCollectionOfTestCases
 ]
 
 { #category : #private }
@@ -23,25 +24,6 @@ CoverageAnalysis >> addTestsFrom: aWrapper to: methodToTestDictionary [
 			]
 ]
 
-{ #category : #accessing }
-CoverageAnalysis >> classes [
-
-	^ classes
-]
-
-{ #category : #accessing }
-CoverageAnalysis >> classesAndMetaClasses [
-
-	^ classes
-		inject: OrderedCollection new
-		into: [ :allClasses :aClass | 
-			allClasses
-				add: aClass;
-				add: aClass class.
-			allClasses
-			]
-]
-
 { #category : #private }
 CoverageAnalysis >> flushMethodLookupCaches [
 
@@ -49,9 +31,9 @@ CoverageAnalysis >> flushMethodLookupCaches [
 ]
 
 { #category : #'initialize-release' }
-CoverageAnalysis >> initializeFor: aCollectionOfClasses running: aCollectionOfTestCases [
+CoverageAnalysis >> initializeFor: aCollectionOfMethods running: aCollectionOfTestCases [
 
-	classes := aCollectionOfClasses asOrderedCollection.
+	modelMethods := aCollectionOfMethods.
 	testCases := aCollectionOfTestCases
 ]
 
@@ -64,15 +46,7 @@ CoverageAnalysis >> installAll: wrappers [
 { #category : #private }
 CoverageAnalysis >> methodReferences [
 
-	^ self classesAndMetaClasses
-		inject: OrderedCollection new
-		into: [ :methodReferences :aClass | 
-			methodReferences
-				addAll:
-					( aClass selectors
-						collect: [ :aSelector | RGMethodDefinition class: aClass selector: aSelector ] ).
-			methodReferences
-			]
+	^ modelMethods collect: [ :method | method methodReference ]
 ]
 
 { #category : #private }
@@ -91,6 +65,12 @@ CoverageAnalysis >> methodWrappersFor: methodReferences using: aCoverageContext 
 
 	^ methodReferences
 		collect: [ :each | MethodWrapperForCoverage on: each for: aCoverageContext ]
+]
+
+{ #category : #accessing }
+CoverageAnalysis >> modelMethods [
+
+	^ modelMethods
 ]
 
 { #category : #evaluating }

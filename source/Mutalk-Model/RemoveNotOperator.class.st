@@ -10,11 +10,13 @@ RemoveNotOperator >> description [
 ]
 
 { #category : #applying }
-RemoveNotOperator >> expressionToReplace [ 
-	^'``@aBoolean not'
+RemoveNotOperator >> expressionToReplace [
+
+	^ '``@aBoolean not'
 ]
 
 { #category : #applying }
 RemoveNotOperator >> newExpression [
-	^'``@aBoolean'
+
+	^ '``@aBoolean'
 ]

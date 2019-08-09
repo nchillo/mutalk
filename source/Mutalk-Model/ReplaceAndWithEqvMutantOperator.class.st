@@ -15,6 +15,8 @@ ReplaceAndWithEqvMutantOperator >> oldSelector [
 ]
 
 { #category : #suggestions }
-ReplaceAndWithEqvMutantOperator >> suggestionFor: aMutation using: aMutantKillingSuggestionGenerator [ 
-	^ aMutantKillingSuggestionGenerator suggestionForMutationProducedByAReplaceAndWithEqvMutantOperator: aMutation
+ReplaceAndWithEqvMutantOperator >> suggestionFor: aMutation using: aMutantKillingSuggestionGenerator [
+
+	^ aMutantKillingSuggestionGenerator
+		suggestionForMutationProducedByAReplaceAndWithEqvMutantOperator: aMutation
 ]

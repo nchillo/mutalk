@@ -42,7 +42,9 @@ MutationTestingAnalysisFileLogger >> logStartEvaluating: aMethodMutation [
 	logStream
 		nextPutAll: 'Evaluating mutant of method ';
 		nextPutAll: ( self methodNameOf: aMethodMutation originalMethod );
-		nextPutAll: '  With source:'.
+		nextPutAll: ' - ';
+		nextPutAll: aMethodMutation operator description;
+		nextPutAll: ' - With source:'.
 	logStream cr.
 	logStream nextPutAll: aMethodMutation modifiedSource.
 	self writeLineToFile: logStream contents

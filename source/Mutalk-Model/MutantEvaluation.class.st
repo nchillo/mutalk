@@ -33,7 +33,7 @@ MutantEvaluation >> initializeCoverageResultIfNil [
 		ifNil: [ | coverageAnalysis |
 
 			coverageAnalysis := CoverageAnalysis
-				for: ( OrderedCollection with: mutation originalClass )
+				for: ( OrderedCollection with: mutation originalMethod )
 				running: testCases.
 			coverageAnalysisResult := coverageAnalysis run
 			]

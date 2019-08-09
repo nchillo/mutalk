@@ -12,24 +12,20 @@ MutantGenerationStrategyTest >> testSelectingFromCoverageMutationsGenerationShou
 
 	| classes mutationTestingAnalysis operator configuration result |
 
-	classes := OrderedCollection with: AuxiliarClassForTestingStrategies.
+	classes := {AuxiliarClassForTestingStrategies}.
 	operator := ReplaceIfTrueWithIfFalseMutantOperator new.
 	configuration := MutationTestingConfiguration
-		forAll: ( Array with: operator )
+		forAll: {operator}
 		with: SelectingFromCoverageMutationsGenerationStrategy new
 		and: AllTestsMethodsRunningMutantEvaluationStrategy new
 		using: NullMutationTestingAnalysisLogger new.
 	mutationTestingAnalysis := MutationTestingAnalysis
-		for:
-			( MutationTestingAnalysis
-				testCasesReferencesFrom: AuxiliarTestClassForTestingStrategies )
-		mutating: classes
+		testCasesFrom: {AuxiliarTestClassForTestingStrategies}
+		mutatingClasses: classes
 		using: configuration.
 	result := mutationTestingAnalysis run.
 	self
-		assert:
-			( ( result mutations collect: [ :each | each originalMethod selector ] )
-				includes: #method1 ).
+		assert: ( ( result mutations collect: [ :each | each originalMethod selector ] ) includes: #method1 ).
 	self
 		deny:
 			( ( result mutations collect: [ :each | each originalMethod selector ] )

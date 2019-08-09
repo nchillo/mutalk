@@ -13,18 +13,17 @@ TestCoverageAnalysis >> testBugWhenHavingATestResourceSendingToOther [
 
 	analysis := CoverageAnalysis
 		for:
-			( Array
-				with: ClassForTestingCoverage
-				with: TestResourceClassForTestingCoverage )
+			{( ClassForTestingCoverage >> #aCoveredMethod ).
+			( ClassForTestingCoverage >> #anUncoveredMethod ).
+			( ClassForTestingCoverage class >> #aClassCoveredMethod ).
+			( TestResourceClassForTestingCoverage >> #setUp ).
+			( TestResourceClassForTestingCoverage >> #doSomething )}
 		running: TestClassForTestingCoverage suite tests.
 	result := analysis run.
-	testCases := result
-		testCasesThatCovers: ClassForTestingCoverage class >> #aClassCoveredMethod.
+	testCases := result testCasesThatCovers: ClassForTestingCoverage class >> #aClassCoveredMethod.
 
 	self
-		assert:
-			( ( testCases collect: [ :each | each selector ] )
-				includes: #testCaseThatCoversAClassMethod )
+		assert: ( ( testCases collect: [ :each | each selector ] ) includes: #testCaseThatCoversAClassMethod )
 ]
 
 { #category : #testing }
@@ -33,18 +32,15 @@ TestCoverageAnalysis >> testCoveredMethods [
 	| analysis result |
 
 	analysis := CoverageAnalysis
-		for: ( Array with: ClassForTestingCoverage )
+		for:
+			{( ClassForTestingCoverage >> #aCoveredMethod ).
+			( ClassForTestingCoverage >> #anUncoveredMethod ).
+			( ClassForTestingCoverage class >> #aClassCoveredMethod )}
 		running: TestClassForTestingCoverage suite tests.
 	result := analysis run.
 
-	self
-		assert:
-			( result coveredMethods
-				includes: ClassForTestingCoverage >> #aCoveredMethod ).
-	self
-		deny:
-			( result coveredMethods
-				includes: ClassForTestingCoverage >> #anUncoveredMethod )
+	self assert: ( result coveredMethods includes: ClassForTestingCoverage >> #aCoveredMethod ).
+	self deny: ( result coveredMethods includes: ClassForTestingCoverage >> #anUncoveredMethod )
 ]
 
 { #category : #testing }
@@ -53,16 +49,16 @@ TestCoverageAnalysis >> testGettingTheTestCasesThatCoverAClassMethod [
 	| analysis result testCases |
 
 	analysis := CoverageAnalysis
-		for: ( Array with: ClassForTestingCoverage )
+		for:
+			{( ClassForTestingCoverage >> #aCoveredMethod ).
+			( ClassForTestingCoverage >> #anUncoveredMethod ).
+			( ClassForTestingCoverage class >> #aClassCoveredMethod )}
 		running: TestClassForTestingCoverage suite tests.
 	result := analysis run.
-	testCases := result
-		testCasesThatCovers: ClassForTestingCoverage class >> #aClassCoveredMethod.
+	testCases := result testCasesThatCovers: ClassForTestingCoverage class >> #aClassCoveredMethod.
 
 	self
-		assert:
-			( ( testCases collect: [ :each | each selector ] )
-				includes: #testCaseThatCoversAClassMethod )
+		assert: ( ( testCases collect: [ :each | each selector ] ) includes: #testCaseThatCoversAClassMethod )
 ]
 
 { #category : #testing }
@@ -71,17 +67,13 @@ TestCoverageAnalysis >> testGettingTheTestCasesThatCoverAMethod [
 	| analysis result testCases |
 
 	analysis := CoverageAnalysis
-		for: ( Array with: ClassForTestingCoverage )
+		for:
+			{( ClassForTestingCoverage >> #aCoveredMethod ).
+			( ClassForTestingCoverage >> #anUncoveredMethod ).
+			( ClassForTestingCoverage class >> #aClassCoveredMethod )}
 		running: TestClassForTestingCoverage suite tests.
 	result := analysis run.
-	testCases := result
-		testCasesThatCovers: ClassForTestingCoverage >> #aCoveredMethod.
-	self
-		assert:
-			( ( testCases collect: [ :each | each selector ] )
-				includes: #testCase1 ).
-	self
-		deny:
-			( ( testCases collect: [ :each | each selector ] )
-				includes: #testCase3 )
+	testCases := result testCasesThatCovers: ClassForTestingCoverage >> #aCoveredMethod.
+	self assert: ( ( testCases collect: [ :each | each selector ] ) includes: #testCase1 ).
+	self deny: ( ( testCases collect: [ :each | each selector ] ) includes: #testCase3 )
 ]

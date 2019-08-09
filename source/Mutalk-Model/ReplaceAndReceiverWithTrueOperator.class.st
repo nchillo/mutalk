@@ -10,6 +10,8 @@ ReplaceAndReceiverWithTrueOperator >> newReceiverExpression [
 ]
 
 { #category : #applying }
-ReplaceAndReceiverWithTrueOperator >> suggestionFor: aMutation using: aMutantKillingSuggestionGenerator [ 
-	^ aMutantKillingSuggestionGenerator suggestionForMutationProducedByAReplaceAndReceiverWithTrueMutantOperator: aMutation
+ReplaceAndReceiverWithTrueOperator >> suggestionFor: aMutation using: aMutantKillingSuggestionGenerator [
+
+	^ aMutantKillingSuggestionGenerator
+		suggestionForMutationProducedByAReplaceAndReceiverWithTrueMutantOperator: aMutation
 ]

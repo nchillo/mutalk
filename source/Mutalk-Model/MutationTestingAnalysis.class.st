@@ -2,40 +2,61 @@ Class {
 	#name : #MutationTestingAnalysis,
 	#superclass : #Object,
 	#instVars : [
-		'modelClasses',
 		'testCases',
 		'coverageAnalysisResult',
-		'configuration'
+		'configuration',
+		'modelMethods'
 	],
 	#category : #'Mutalk-Model'
 }
 
 { #category : #'instance creation' }
-MutationTestingAnalysis class >> for: testCases mutating: classes using: aMutationTestingConfiguration [
+MutationTestingAnalysis class >> for: testCases mutating: methods using: aMutationTestingConfiguration [
 
 	^ self new
-		initializeFor: testCases mutating: classes using: aMutationTestingConfiguration;
+		initializeFor: testCases mutating: methods using: aMutationTestingConfiguration;
 		yourself
 ]
 
 { #category : #'instance creation' }
-MutationTestingAnalysis class >> testCasesFrom: testClasses [ 
-	^ testClasses
+MutationTestingAnalysis class >> methodsFrom: classes [
+
+	^ classes
 		inject: OrderedCollection new
-		into: [:testCases :testClass | 
-			((testClass isKindOf: TestCase class)
-					and: [testClass isAbstract not])
-				ifTrue: [testCases
-						addAll: (self testCasesReferencesFrom: testClass)].
-			testCases]
+		into: [ :collection :class | 
+			collection addAll: class localMethods.
+			collection addAll: class class localMethods.
+			collection
+			]
 ]
 
 { #category : #'instance creation' }
-MutationTestingAnalysis class >> testCasesFrom: testClasses mutating: classes using: aMutationTestingConfiguration [
+MutationTestingAnalysis class >> testCasesFrom: testClasses [
+
+	^ testClasses
+		inject: OrderedCollection new
+		into: [ :testCases :testClass | 
+			( ( testClass isKindOf: TestCase class ) and: [ testClass isAbstract not ] )
+				ifTrue: [ testCases addAll: ( self testCasesReferencesFrom: testClass ) ].
+			testCases
+			]
+]
+
+{ #category : #'instance creation' }
+MutationTestingAnalysis class >> testCasesFrom: testClasses mutating: methods using: aMutationTestingConfiguration [
 
 	^ self
 		for: ( self testCasesFrom: testClasses )
-		mutating: classes
+		mutating: methods
+		using: aMutationTestingConfiguration
+]
+
+{ #category : #'instance creation' }
+MutationTestingAnalysis class >> testCasesFrom: testClasses mutatingClasses: classes using: aMutationTestingConfiguration [
+
+	^ self
+		for: ( self testCasesFrom: testClasses )
+		mutating: ( self methodsFrom: classes )
 		using: aMutationTestingConfiguration
 ]
 
@@ -57,7 +78,7 @@ MutationTestingAnalysis >> coverageAnalysisResult [
 { #category : #running }
 MutationTestingAnalysis >> generateCoverageAnalysis [
 
-	^ ( CoverageAnalysis for: self modelClasses running: testCases ) run
+	^ ( CoverageAnalysis for: modelMethods running: testCases ) run
 ]
 
 { #category : #running }
@@ -88,19 +109,11 @@ MutationTestingAnalysis >> generateResultsForAll: someMutations [
 ]
 
 { #category : #'initialize-release' }
-MutationTestingAnalysis >> initializeFor: someTestCasesReferences mutating: someModelClasses using: aConfiguration [
+MutationTestingAnalysis >> initializeFor: someTestCasesReferences mutating: collectionOfModelMethods using: aConfiguration [
 
-	modelClasses := someModelClasses.
+	modelMethods := collectionOfModelMethods.
 	testCases := someTestCasesReferences.
 	configuration := aConfiguration.
-]
-
-{ #category : #accesing }
-MutationTestingAnalysis >> modelClasses [
-	"Filter tests and testsResources"
-	^ modelClasses
-		reject: [:class | self testBaseClasses
-				anySatisfy: [:classToFilter | class includesBehavior: classToFilter]]
 ]
 
 { #category : #running }
@@ -125,10 +138,4 @@ MutationTestingAnalysis >> run [
 	]
 		on: TestsWithErrorsException
 		do: [ :ex | MutationTestingErrorResult describedAs: 'Tests con errores' ]
-]
-
-{ #category : #accesing }
-MutationTestingAnalysis >> testBaseClasses [
-
-	^OrderedCollection with: TestCase with: TestResource
 ]

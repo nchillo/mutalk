@@ -13,13 +13,13 @@ MutationTestingAnalysisLoggerTest >> testExecutingSimpleMutation [
 	operator := ReplacePlusWithMinusMutantOperator new.
 
 	configuration := MutationTestingConfiguration
-		forAll: ( Array with: operator )
+		forAll: {operator}
 		with: AllMutationsGenerationStrategy new
 		and: AllTestsMethodsRunningMutantEvaluationStrategy new
 		using: logger.
 	analysis := MutationTestingAnalysis
-		testCasesFrom: ( Array with: AuxiliarClassForMutationTestingAnalysisTest )
-		mutating: ( Array with: AuxiliarClassForMutationTestingAnalysis )
+		testCasesFrom: {AuxiliarClassForMutationTestingAnalysisTest}
+		mutatingClasses: {AuxiliarClassForMutationTestingAnalysis}
 		using: configuration.
 	analysis run.
 	self assert: logger loggedStartAnalysis.

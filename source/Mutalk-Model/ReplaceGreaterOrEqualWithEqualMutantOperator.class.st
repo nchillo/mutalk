@@ -15,6 +15,8 @@ ReplaceGreaterOrEqualWithEqualMutantOperator >> oldSelector [
 ]
 
 { #category : #suggestions }
-ReplaceGreaterOrEqualWithEqualMutantOperator >> suggestionFor: aMutation using: aMutantKillingSuggestionGenerator [ 
-	^ aMutantKillingSuggestionGenerator suggestionForMutationProducedByAReplaceGreaterOrEqualWithEqualMutantOperator: aMutation
+ReplaceGreaterOrEqualWithEqualMutantOperator >> suggestionFor: aMutation using: aMutantKillingSuggestionGenerator [
+
+	^ aMutantKillingSuggestionGenerator
+		suggestionForMutationProducedByAReplaceGreaterOrEqualWithEqualMutantOperator: aMutation
 ]

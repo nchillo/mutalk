@@ -21,5 +21,7 @@ ReplaceAndWithFalseOperator >> newExpression [
 
 { #category : #suggestions }
 ReplaceAndWithFalseOperator >> suggestionFor: aMutation using: aMutantKillingSuggestionGenerator [
-	^aMutantKillingSuggestionGenerator suggestionForMutationProducedByAReplaceAndWithFalseOperator: aMutation.
+
+	^ aMutantKillingSuggestionGenerator
+		suggestionForMutationProducedByAReplaceAndWithFalseOperator: aMutation
 ]

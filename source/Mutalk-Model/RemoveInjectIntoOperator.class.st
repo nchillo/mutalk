@@ -10,11 +10,13 @@ RemoveInjectIntoOperator >> description [
 ]
 
 { #category : #applying }
-RemoveInjectIntoOperator >> expressionToReplace [ 
-	^'``@aCollection inject: ``@aValue into:``@aBlock'
+RemoveInjectIntoOperator >> expressionToReplace [
+
+	^ '``@aCollection inject: ``@aValue into:``@aBlock'
 ]
 
 { #category : #applying }
 RemoveInjectIntoOperator >> newExpression [
-	^'``@aValue'
+
+	^ '``@aValue'
 ]

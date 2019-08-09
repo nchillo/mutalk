@@ -41,19 +41,18 @@ MutantEvaluationStrategyTest >> testSelectingFromCoverageEvaluationStrategyShoul
 
 	"tests that the message #testCasesToEvaluateFrom: returns only the test cases that cover the mutated code"
 
-	| classes mutationTestingAnalysis testCases mutation operator evaluationStrategy configuration  coverage|
+	| mutationTestingAnalysis testCases mutation operator evaluationStrategy configuration coverage |
 
-	classes := OrderedCollection with: AuxiliarClassForTestingStrategies.
 	operator := ReplaceIfTrueWithIfFalseMutantOperator new.
 	evaluationStrategy := SelectingFromCoverageMutantEvaluationStrategy new.
 	configuration := MutationTestingConfiguration
-		forAll: ( Array with: operator )
+		forAll: {operator}
 		with: AllMutationsGenerationStrategy new
 		and: evaluationStrategy
 		using: NullMutationTestingAnalysisLogger new.
 	mutationTestingAnalysis := MutationTestingAnalysis
 		for: AuxiliarTestClassForTestingStrategies suite tests
-		mutating: classes
+		mutating: AuxiliarClassForTestingStrategies localMethods
 		using: configuration.
 	coverage := mutationTestingAnalysis generateCoverageAnalysis.
 	mutation := ( operator mutationsFor: AuxiliarClassForTestingStrategies >> #method1 )

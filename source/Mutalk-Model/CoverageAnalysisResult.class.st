@@ -33,9 +33,9 @@ CoverageAnalysisResult >> initializeFor: aCoverageAnalysis from: aDictionaryOfMe
 ]
 
 { #category : #accessing }
-CoverageAnalysisResult >> modelClasses [
+CoverageAnalysisResult >> modelMethods [
 
-	^ coverageAnalysis classes
+	^ coverageAnalysis modelMethods
 ]
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 	#category : #'Mutalk-Model-Generation'
 }
 
-{ #category : #'Instance Creation' }
+{ #category : #Accessing }
 MutationTestingConfiguration class >> default [
 
 	^ self
@@ -18,6 +18,28 @@ MutationTestingConfiguration class >> default [
 		with: AllMutationsGenerationStrategy new
 		and: AllTestsMethodsRunningMutantEvaluationStrategy new
 		using: NullMutationTestingAnalysisLogger new
+]
+
+{ #category : #Accessing }
+MutationTestingConfiguration class >> defaultWithLogging [
+	
+	^ self
+		forAll: MutantOperator contents
+		with: AllMutationsGenerationStrategy new
+		and: AllTestsMethodsRunningMutantEvaluationStrategy new
+		using: (MutationTestingAnalysisFileLogger toFileNamed: 'MutationTesting.log')
+]
+
+{ #category : #Accessing }
+MutationTestingConfiguration class >> defaultWithLoggingAndSafeOperators [
+
+	^ self
+		forAll:
+			(MutantOperator contents
+				reject: [ :operator | operator = RemoveCaretOperator new ])
+		with: AllMutationsGenerationStrategy new
+		and: AllTestsMethodsRunningMutantEvaluationStrategy new
+		using: (MutationTestingAnalysisFileLogger toFileNamed: 'MutationTesting.log')
 ]
 
 { #category : #'Instance Creation' }
