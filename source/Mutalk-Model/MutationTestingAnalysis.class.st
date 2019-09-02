@@ -93,9 +93,11 @@ MutationTestingAnalysis >> generateMutationsUsing: aCoverageAnalysis [
 { #category : #running }
 MutationTestingAnalysis >> generateResultsForAll: someMutations [
 
-	^ someMutations
-		inject: OrderedCollection new
-		into: [ :results :aMutation | 
+	| results |
+
+	results := OrderedCollection new.
+	someMutations
+		do: [ :aMutation | 
 			configuration logger logStartEvaluating: aMutation.
 			results
 				add:
@@ -103,9 +105,10 @@ MutationTestingAnalysis >> generateResultsForAll: someMutations [
 						for: aMutation
 						using: testCases
 						following: configuration evaluationStrategy
-						andConsidering: self coverageAnalysisResult ) value.
-			results
+						andConsidering: self coverageAnalysisResult ) value
 			]
+		displayingProgress: 'Running mutants'.
+	^ results
 ]
 
 { #category : #'initialize-release' }
@@ -129,10 +132,9 @@ MutationTestingAnalysis >> run [
 	testCases do: [ :aTestCase | aTestCase run ].
 	configuration logger logAnalysisStartFor: self.
 	time := Time
-		millisecondsToRun: [ | coverageAnalysis |
-
-			coverageAnalysis := self generateCoverageAnalysis.
-			mutantsResults := self generateResultsForAll: ( self generateMutationsUsing: coverageAnalysis )
+		millisecondsToRun: [ coverageAnalysisResult := self generateCoverageAnalysis.
+			mutantsResults := self
+				generateResultsForAll: ( self generateMutationsUsing: coverageAnalysisResult )
 			].
 	MutationTestingGeneralResult for: mutantsResults timed: ( Duration milliSeconds: time )
 	]
