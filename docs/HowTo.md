@@ -15,7 +15,7 @@ result := analysis run.
 
 
 ```smalltalk
-| analysis result browser |
+| analysis result |
 analysis := MutationTestingAnalysis
     testCasesFrom: { YOUR_TEST_CLASSES }
     mutatingClasses: { MODEL_CLASSES }
@@ -29,7 +29,7 @@ result := analysis run.
 You can use the method defaultWithLogging in the MutationTestingConfiguration. That will create a log file in the image folder.
 
 ```smalltalk
-| analysis result browser |
+| analysis result |
 analysis := MutationTestingAnalysis
     testCasesFrom: { YOUR_TEST_CLASSES }
     mutatingClasses: { MODEL_CLASSES }
