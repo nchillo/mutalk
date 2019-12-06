@@ -22,6 +22,12 @@ MethodMutation class >> for: aMethod using: anOperatorApplied result: aModifiedS
 		 yourself
 ]
 
+{ #category : #accessing }
+MethodMutation >> drTestsBrowse [
+	
+	originalMethod drTestsBrowse
+]
+
 { #category : #'initialize-release' }
 MethodMutation >> initializeFor: aMethod using: anOperatorApplied result: aModifiedSource ofClass: aClass [
 	originalMethod := aMethod.
