@@ -44,11 +44,11 @@ DTMutalkRunner >> resultButtonHelp [
 { #category : #api }
 DTMutalkRunner >> runForConfiguration: aDTpluginConfiguration [
 
-  | testClasses modelClasses analysis result |
+  | testClasses modelMethods analysis result |
   result := self pluginResultClass new.
   testClasses := aDTpluginConfiguration packagesSelected flatCollect: [:p |  p classes ].
-  modelClasses := aDTpluginConfiguration items flatCollect: [:p |  p classes ].
-  analysis := MutationTestingAnalysis testCasesFrom: testClasses mutatingClasses: modelClasses using: MutationTestingConfiguration default.
+  modelMethods := aDTpluginConfiguration items flatCollect: [:p |  p methods ].
+  analysis := MutationTestingAnalysis testCasesFrom: testClasses mutating: modelMethods using: MutationTestingConfiguration defaultWithLoggingAndSafeOperators.
   result testResults: analysis run.
   ^result
 ]
