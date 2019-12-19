@@ -50,17 +50,10 @@ MutantEvaluation >> initializeFor: aMutation using: aCollectionOftestCases follo
 
 { #category : #private }
 MutantEvaluation >> runTests [
-
 	"Collect all suite test and execute them."
 
-	| suite |
-
-	suite := TestSuite named: 'MutationEvaluation'.
-	suite
-		addTests:
-			( ( strategy testCasesToEvaluate: mutation for: coverageAnalysisResult )
-				collect: [ :each | each testCase ] ).
-	^ [ suite runStoppingOnFirstFailOrError ]
+	^ [ strategy
+		runSuite: (strategy buildSuiteFor: mutation using: coverageAnalysisResult) ]
 		on: Error
 		do: [ :ex | nil ]
 ]
@@ -73,13 +66,10 @@ MutantEvaluation >> testResults [
 
 { #category : #evaluation }
 MutantEvaluation >> value [
-
 	| testResults |
-
 	self initializeCoverageResultIfNil.
 	testResults := [ mutation install.
-	self testResults
-	]
+	self testResults ]
 		ensure: [ mutation uninstall ].
 	^ MutantEvaluationResult
 		for: mutation

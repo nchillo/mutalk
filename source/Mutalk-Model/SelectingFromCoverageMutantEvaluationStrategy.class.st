@@ -4,8 +4,19 @@ Class {
 	#category : #'Mutalk-Model-Strategies'
 }
 
-{ #category : #private }
-SelectingFromCoverageMutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aCoverageResult [
+{ #category : #Running }
+SelectingFromCoverageMutantEvaluationStrategy >> buildSuiteFor: mutation using: coverageAnalysisResult [
+	| suite |
+	suite := TestSuite named: 'MutationEvaluation'.
+	suite
+		addTests:
+			((coverageAnalysisResult testCasesThatCovers: mutation originalMethod)
+				collect: [ :each | each testCase ]).
+	^ suite
+]
 
-	^ aCoverageResult testCasesThatCovers: aMutation originalMethod
+{ #category : #Running }
+SelectingFromCoverageMutantEvaluationStrategy >> runSuite: suite [
+
+	^suite runStoppingOnFirstFailOrError 
 ]

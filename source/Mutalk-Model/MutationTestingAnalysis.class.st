@@ -7,7 +7,7 @@ Class {
 		'configuration',
 		'modelMethods'
 	],
-	#category : #'Mutalk-Model'
+	#category : #'Mutalk-Model-Process'
 }
 
 { #category : #'instance creation' }

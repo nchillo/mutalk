@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'mutationGeneralResult'
 	],
-	#category : #'Mutalk-Model-Reporting'
+	#category : #'Mutalk-Model-Logging'
 }
 
 { #category : #'instance creation' }

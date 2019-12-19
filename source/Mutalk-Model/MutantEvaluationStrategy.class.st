@@ -10,16 +10,21 @@ MutantEvaluationStrategy >> = anStrategy [
 	^self class = anStrategy class
 ]
 
+{ #category : #Running }
+MutantEvaluationStrategy >> buildSuiteFor: mutation using: coverageAnalysisResult [
+	self subclassResponsibility
+]
+
 { #category : #comparing }
 MutantEvaluationStrategy >> minimumTimeout [
 
 	^1 seconds  
 ]
 
-{ #category : #evaluating }
-MutantEvaluationStrategy >> testCasesToEvaluate: aMutation for: aCoverageResult [
+{ #category : #Running }
+MutantEvaluationStrategy >> runSuite:  suite [
 
-	self subclassResponsibility
+	self subclassResponsibility 
 ]
 
 { #category : #evaluating }

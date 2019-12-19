@@ -24,7 +24,6 @@ MutantEvaluationStrategyTest >> setUp [
 
 { #category : #tests }
 MutantEvaluationStrategyTest >> testComparingEvaluationStrategies [
-
 	self
 		assert: SelectingFromCoverageMutantEvaluationStrategy new
 		equals: SelectingFromCoverageMutantEvaluationStrategy new.
@@ -32,8 +31,17 @@ MutantEvaluationStrategyTest >> testComparingEvaluationStrategies [
 		assert: AllTestsMethodsRunningMutantEvaluationStrategy new
 		equals: AllTestsMethodsRunningMutantEvaluationStrategy new.
 	self
+		assert: DeepAnalysisMutantEvaluationStrategy new
+		equals: DeepAnalysisMutantEvaluationStrategy new.
+	self
 		deny: AllTestsMethodsRunningMutantEvaluationStrategy new
-		equals: SelectingFromCoverageMutantEvaluationStrategy new
+		equals: SelectingFromCoverageMutantEvaluationStrategy new.
+	self
+		deny: AllTestsMethodsRunningMutantEvaluationStrategy new
+		equals: DeepAnalysisMutantEvaluationStrategy new.
+	self
+		deny: SelectingFromCoverageMutantEvaluationStrategy new
+		equals: DeepAnalysisMutantEvaluationStrategy new
 ]
 
 { #category : #testing }
@@ -41,7 +49,7 @@ MutantEvaluationStrategyTest >> testSelectingFromCoverageEvaluationStrategyShoul
 
 	"tests that the message #testCasesToEvaluateFrom: returns only the test cases that cover the mutated code"
 
-	| mutationTestingAnalysis testCases mutation operator evaluationStrategy configuration coverage |
+	| mutationTestingAnalysis testSuite mutation operator evaluationStrategy configuration coverage |
 
 	operator := ReplaceIfTrueWithIfFalseMutantOperator new.
 	evaluationStrategy := SelectingFromCoverageMutantEvaluationStrategy new.
@@ -51,15 +59,15 @@ MutantEvaluationStrategyTest >> testSelectingFromCoverageEvaluationStrategyShoul
 		and: evaluationStrategy
 		using: NullMutationTestingAnalysisLogger new.
 	mutationTestingAnalysis := MutationTestingAnalysis
-		for: AuxiliarTestClassForTestingStrategies suite tests
+		testCasesFrom: {AuxiliarTestClassForTestingStrategies}
 		mutating: AuxiliarClassForTestingStrategies localMethods
 		using: configuration.
 	coverage := mutationTestingAnalysis generateCoverageAnalysis.
 	mutation := ( operator mutationsFor: AuxiliarClassForTestingStrategies >> #method1 )
 		asOrderedCollection first.
-	testCases := evaluationStrategy testCasesToEvaluate: mutation for: coverage.
+	testSuite := evaluationStrategy buildSuiteFor: mutation using: coverage.
 	self
-		assert: ( ( testCases collect: [ :each | each selector ] ) includes: #testMethodThatCoverMethod1 ).
+		assert: ( ( testSuite tests collect: [ :each | each selector ] ) includes: #testMethodThatCoverMethod1 ).
 	self
-		deny: ( ( testCases collect: [ :each | each selector ] ) includes: #testMethodThatCoverMethod2 )
+		deny: ( ( testSuite tests collect: [ :each | each selector ] ) includes: #testMethodThatCoverMethod2 )
 ]

@@ -1,11 +1,11 @@
 Class {
-	#name : #AllTestsMethodsRunningMutantEvaluationStrategy,
+	#name : #DeepAnalysisMutantEvaluationStrategy,
 	#superclass : #MutantEvaluationStrategy,
 	#category : #'Mutalk-Model-Strategies'
 }
 
 { #category : #Running }
-AllTestsMethodsRunningMutantEvaluationStrategy >> buildSuiteFor: mutation using: coverageAnalysisResult [
+DeepAnalysisMutantEvaluationStrategy >> buildSuiteFor: mutation using: coverageAnalysisResult [
 	| suite |
 	suite := TestSuite named: 'MutationEvaluation'.
 	suite
@@ -14,7 +14,7 @@ AllTestsMethodsRunningMutantEvaluationStrategy >> buildSuiteFor: mutation using:
 ]
 
 { #category : #Running }
-AllTestsMethodsRunningMutantEvaluationStrategy >> runSuite:  suite [
-
-	^ suite runStoppingOnFirstFailOrError 
+DeepAnalysisMutantEvaluationStrategy >> runSuite:  suite [
+	"Run all the tests for every mutant"
+	^suite run
 ]

@@ -53,6 +53,26 @@ MutationTestingConfiguration class >> forAll: operators with: aMutantGenerationS
 ]
 
 { #category : #Accessing }
+MutationTestingConfiguration class >> fullAnalysis [
+
+	^ self
+		forAll: MutantOperator contents
+		with: AllMutationsGenerationStrategy new
+		and: DeepAnalysisMutantEvaluationStrategy new
+		using: NullMutationTestingAnalysisLogger new
+]
+
+{ #category : #Accessing }
+MutationTestingConfiguration class >> onlyCovered [
+
+	^ self
+		forAll: MutantOperator contents
+		with: AllMutationsGenerationStrategy new
+		and: SelectingFromCoverageMutantEvaluationStrategy new
+		using: NullMutationTestingAnalysisLogger new
+]
+
+{ #category : #Accessing }
 MutationTestingConfiguration >> evaluationStrategy [
 
 	^ runningStrategy
