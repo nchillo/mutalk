@@ -44,6 +44,16 @@ MutantEvaluationResult class >> newFor: aMutant results: aTestResult producedBy:
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+MutantEvaluationResult >> drTestsBrowse [
+	mutant drTestsBrowse
+]
+
+{ #category : #accessing }
+MutantEvaluationResult >> drTestsName [
+  ^self printString
+]
+
 { #category : #testing }
 MutantEvaluationResult >> killed [
 	self subclassResponsibility
