@@ -1,7 +1,7 @@
 Class {
 	#name : #DTMutalkRunner,
 	#superclass : #DrTestsPlugin,
-	#category : #'DrTests-Mutalk'
+	#category : #'Mutalk-DrTests'
 }
 
 { #category : #'api - accessing' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'testsResult'
 	],
-	#category : #'DrTests-Mutalk'
+	#category : #'Mutalk-DrTests'
 }
 
 { #category : #accessing }
