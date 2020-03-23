@@ -32,6 +32,12 @@ DTMutalkRunner >> itemsToBeAnalysedFor: packagesSelected [
 ]
 
 { #category : #accessing }
+DTMutalkRunner >> oldPragmaForResultTrees [ 
+
+  ^#()
+]
+
+{ #category : #accessing }
 DTMutalkRunner >> pragmaForResultTrees [
   ^#dTMutalkResultTreeNamed:
 ]

@@ -24,12 +24,13 @@ BaselineOfMutalk >> baselineMutalk: spec [
 
 	spec
 		package: 'Mutalk-Model' with: [ spec requires: #('testCoverage' 'NeoJSON') ];
+		package: 'DrTests-Mutalk' with: [ spec requires: #('Mutalk-Model') ];
 		package: 'Mutalk-Model-TestResources' with: [ spec requires: #('Mutalk-Model') ];
 		package: 'Mutalk-Model-Tests'
 			with: [ spec requires: #('Mutalk-Model' 'Mutalk-Model-TestResources') ];
 		group: 'Deployment' with: 'Mutalk-Model';
 		group: 'Tests' with: 'Mutalk-Model-Tests'.
-	spec group: 'default' with: #('Mutalk-Model' 'Mutalk-Model-TestResources' 'Mutalk-Model-Tests')
+	spec group: 'default' with: #('Mutalk-Model' 'Mutalk-Model-TestResources' 'Mutalk-Model-Tests' 'DrTests-Mutalk')
 ]
 
 { #category : #initialization }
