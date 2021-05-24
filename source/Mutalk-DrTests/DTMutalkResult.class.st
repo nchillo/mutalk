@@ -16,15 +16,21 @@ DTMutalkResult >> buildTreeForUI [
            yourself) . 
         (DTTreeNode new
            name: 'Alive Mutants';
-           subResults: (self testResults aliveMutants collect: [:result |  DTTestLeaf content: result ]);
+           subResults: (self testResults aliveMutants collect: [:result |  DTTreeLeafNode new
+								content: result;
+								yourself ]);
            yourself) . 
         (DTTreeNode new
            name: 'Killed Mutants';
-           subResults: (self testResults killedMutants collect: [:result |  DTTestLeaf content: result ]);
+           subResults: (self testResults killedMutants collect: [:result |  DTTreeLeafNode new
+								content: result;
+								yourself]);
            yourself) . 
         (DTTreeNode new
            name: 'Terminated Mutants';
-           subResults: (self testResults terminatedMutants collect: [:result |  DTTestLeaf content: result ]);
+           subResults: (self testResults terminatedMutants collect: [:result |  DTTreeLeafNode new
+								content: result;
+								yourself]);
            yourself)}
 ]
 

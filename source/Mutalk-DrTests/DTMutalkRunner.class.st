@@ -54,7 +54,7 @@ DTMutalkRunner >> runForConfiguration: aDTpluginConfiguration [
   result := self pluginResultClass new.
   testClasses := aDTpluginConfiguration packagesSelected flatCollect: [:p |  p classes ].
   modelMethods := aDTpluginConfiguration items flatCollect: [:p |  p methods ].
-  analysis := MutationTestingAnalysis testCasesFrom: testClasses mutating: modelMethods using: MutationTestingConfiguration defaultWithLoggingAndSafeOperators.
+  analysis := MutationTestingAnalysis testCasesFrom: testClasses mutating: modelMethods using: MutationTestingConfiguration fullAnalysis.
   result testResults: analysis run.
   ^result
 ]
