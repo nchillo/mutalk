@@ -50,6 +50,12 @@ BaselineOfMutalk >> setUpDependencies: spec [
 			spec group: 'testCoverage' with: #('TestCoverage').
 			spec group: 'MutalkDrTests' with: #('Mutalk-DrTests') ].
 	spec
+		for: #'pharo9.x'
+		do: [ spec package: 'TestCoverage'.
+			spec package: 'Mutalk-DrTests'.
+			spec group: 'testCoverage' with: #('TestCoverage').
+			spec group: 'MutalkDrTests' with: #('Mutalk-DrTests') ].
+	spec
 		baseline: 'NeoJSON'
 		with: [ spec
 				repository: 'github://svenvc/NeoJSON/repository';
